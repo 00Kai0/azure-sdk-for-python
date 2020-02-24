@@ -1,0 +1,51 @@
+interactions:
+- request:
+    body: 'b''b\''{"tags": {"dept": "Initech"}, "location": "eastus", "properties":
+      {"cacheSizeGB": 3072, "subnet": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storagecache_test_storagecache96bf11ea/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"},
+      "sku": {"name": "Standard_2G"}}\'''''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '319'
+      Content-Type:
+      - application/json; charset=utf-8
+      User-Agent:
+      - python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic) msrest/0.6.10
+        msrest_azure/0.6.2 azure-mgmt-storagecache/0.2.0 Azure-SDK-For-Python
+      accept-language:
+      - en-US
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test_cli_mgmt_storagecache_test_storagecache96bf11ea/providers/Microsoft.StorageCache/caches/testCache?api-version=2019-11-01
+  response:
+    body:
+      string: '{"error":{"code":"InvalidResourceType","message":"The resource type
+        could not be found in the namespace ''Microsoft.StorageCache'' for api version
+        ''2019-11-01''."}}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '161'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 24 Feb 2020 16:43:25 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-failure-cause:
+      - gateway
+    status:
+      code: 404
+      message: Not Found
+version: 1
