@@ -1,0 +1,105 @@
+interactions:
+- request:
+    body: '{"location": "westus"}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '22'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-azure-mgmt-resource/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test_mgmt_resource_locks_test_locks_at_resource_level529215f2/providers/Microsoft.Compute/availabilitySets/pytestavset529215f2?api-version=2019-07-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"pytestavset529215f2\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_resource_locks_test_locks_at_resource_level529215f2/providers/Microsoft.Compute/availabilitySets/pytestavset529215f2\"\
+        ,\r\n  \"type\": \"Microsoft.Compute/availabilitySets\",\r\n  \"location\"\
+        : \"westus\",\r\n  \"properties\": {\r\n    \"platformUpdateDomainCount\"\
+        : 5,\r\n    \"platformFaultDomainCount\": 3\r\n  },\r\n  \"sku\": {\r\n  \
+        \  \"name\": \"Classic\"\r\n  }\r\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '455'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 23 Mar 2020 03:43:10 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-resource:
+      - Microsoft.Compute/PutVM3Min;239,Microsoft.Compute/PutVM30Min;1198
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1196'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"properties": {"level": "CanNotDelete"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '41'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-azure-mgmt-resource/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test_mgmt_resource_locks_test_locks_at_resource_level529215f2/providers/Microsoft.Compute/availabilitySets/pytestavset529215f2/providers/Microsoft.Authorization/locks/pylockrg?api-version=2016-09-01
+  response:
+    body:
+      string: '{"error":{"code":"AuthorizationFailed","message":"The client ''123743cc-88ef-49ee-920e-13958fe5697d''
+        with object id ''123743cc-88ef-49ee-920e-13958fe5697d'' does not have authorization
+        to perform action ''Microsoft.Authorization/locks/write'' over scope ''/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test_mgmt_resource_locks_test_locks_at_resource_level529215f2/providers/Microsoft.Compute/availabilitySets/pytestavset529215f2/providers/Microsoft.Authorization/locks/pylockrg''
+        or the scope is invalid. If access was recently granted, please refresh your
+        credentials."}}'
+    headers:
+      cache-control:
+      - no-cache
+      connection:
+      - close
+      content-length:
+      - '586'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Mon, 23 Mar 2020 03:43:10 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-failure-cause:
+      - gateway
+    status:
+      code: 403
+      message: Forbidden
+version: 1
