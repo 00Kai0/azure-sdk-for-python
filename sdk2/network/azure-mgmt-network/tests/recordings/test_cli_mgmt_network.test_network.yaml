@@ -1,0 +1,47 @@
+interactions:
+- request:
+    body: '{"location": "westus", "properties": {"peeringLocation": "peeringLocationName",
+      "bandwidthInGbps": 100, "encapsulation": "QinQ"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '129'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-azure-mgmt-network/1.0.0 Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_test_networkf7190e2c/providers/Microsoft.Network/ExpressRoutePorts/expressrouteport?api-version=2019-11-01
+  response:
+    body:
+      string: '{"error":{"code":"InvalidResourceType","message":"The resource type
+        could not be found in the namespace ''Microsoft.Network'' for api version
+        ''2019-11-01''."}}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '156'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Wed, 18 Mar 2020 14:38:03 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-failure-cause:
+      - gateway
+    status:
+      code: 404
+      message: Not Found
+version: 1
