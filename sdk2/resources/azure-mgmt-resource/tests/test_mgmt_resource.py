@@ -9,7 +9,7 @@
 # coverd ops:
 #   tags: 9/9
 #   resource_groups: 7/7
-#   resources: 12/14
+#   resources: 12/14 TODO: ServiceResponseError
 #   deployments: 34/43  TODO: tenant is forbidden
 #   deployment_operations: 8/10 TODO: tenant is forbidden
 #   providers: 6/6
