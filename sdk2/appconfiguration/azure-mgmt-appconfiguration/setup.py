@@ -9,8 +9,8 @@
 
 from setuptools import setup, find_packages
 
-NAME = "appconfigurationmanagementclient"
-VERSION = "0.1.0"
+NAME = "azure-mgmt-appconfiguration"
+VERSION = "0.4.0"
 
 # To install the library, run the following
 #
@@ -29,8 +29,13 @@ setup(
     url="",
     keywords=["Swagger", "AppConfigurationManagementClient"],
     install_requires=REQUIRES,
-    packages=find_packages(),
-    include_package_data=True,
+    packages=find_packages(
+        'tests',
+        # Exclude packages that will be covered by PEP420 or nspkg
+        'azure',
+        'azure.mgmt',
+    ),
+    # include_package_data=True,
     long_description="""\
     AppConfigurationManagementClient.
     """

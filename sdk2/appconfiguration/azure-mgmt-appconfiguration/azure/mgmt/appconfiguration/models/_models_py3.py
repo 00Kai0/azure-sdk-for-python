@@ -217,6 +217,7 @@ class ConfigurationStore(Resource):
         'provisioning_state': {'readonly': True},
         'creation_date': {'readonly': True},
         'endpoint': {'readonly': True},
+        'private_endpoint_connections': {'readonly': True}
     }
 
     _attribute_map = {
@@ -231,6 +232,7 @@ class ConfigurationStore(Resource):
         'creation_date': {'key': 'properties.creationDate', 'type': 'iso-8601'},
         'endpoint': {'key': 'properties.endpoint', 'type': 'str'},
         'encryption': {'key': 'properties.encryption', 'type': 'EncryptionProperties'},
+        'private_endpoint_connections': {'key': 'properties.privateEndpointConnections', 'type': '[PrivateEndpointConnection]'}
     }
 
     def __init__(
@@ -249,6 +251,7 @@ class ConfigurationStore(Resource):
         self.provisioning_state = None
         self.creation_date = None
         self.endpoint = None
+        self.private_endpoint_connections = None
         self.encryption = encryption
 
 
@@ -593,13 +596,13 @@ class OperationDefinitionListResult(msrest.serialization.Model):
     """The result of a request to list configuration store operations.
 
     :param value: The collection value.
-    :type value: list[~azure.mgmt.appconfiguration.models.OperationDefinition]
+    :type value:list[~azure.mgmt.appconfiguration.models.OperationDefinition]
     :param next_link: The URI that can be used to request the next set of paged results.
     :type next_link: str
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[OperationDefinition]'},
+        'value': {'ke y': 'value', 'type': '[OperationDefinition]'},
         'next_link': {'key': 'nextLink', 'type': 'str'},
     }
 
@@ -659,7 +662,7 @@ class PrivateEndpointConnection(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
+        # 'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
         'provisioning_state': {'readonly': True},
@@ -677,12 +680,14 @@ class PrivateEndpointConnection(msrest.serialization.Model):
     def __init__(
         self,
         *,
+        id: Optional[str] = None,
         private_endpoint: Optional["PrivateEndpoint"] = None,
         private_link_service_connection_state: Optional["PrivateLinkServiceConnectionState"] = None,
         **kwargs
     ):
         super(PrivateEndpointConnection, self).__init__(**kwargs)
-        self.id = None
+        # self.id = None
+        self.id = id
         self.name = None
         self.type = None
         self.provisioning_state = None

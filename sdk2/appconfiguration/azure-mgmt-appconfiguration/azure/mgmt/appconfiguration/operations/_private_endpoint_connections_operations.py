@@ -184,6 +184,7 @@ class PrivateEndpointConnectionsOperations(object):
         config_store_name,  # type: str
         private_endpoint_connection_name,  # type: str
         private_endpoint=None,  # type: Optional["models.PrivateEndpoint"]
+        id=None, # type: str
         private_link_service_connection_state=None,  # type: Optional["models.PrivateLinkServiceConnectionState"]
         **kwargs  # type: Any
     ):
@@ -191,7 +192,8 @@ class PrivateEndpointConnectionsOperations(object):
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
 
-        _private_endpoint_connection = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
+        # _private_endpoint_connection = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
+        _private_endpoint_connection = models.PrivateEndpointConnection(id=id, private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
         api_version = "2019-11-01-preview"
 
         # Construct URL
