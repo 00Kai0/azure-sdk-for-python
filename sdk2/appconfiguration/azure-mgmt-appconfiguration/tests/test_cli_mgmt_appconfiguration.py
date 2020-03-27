@@ -161,9 +161,10 @@ class MgmtAppConfigurationTest(AzureMgmtTestCase):
             resource_group.name,
             CONFIGURATION_STORE_NAME,
             PRIVATE_ENDPOINT_CONNECTION_NAME,
-            id=BODY["id"],
+            BODY)
+            # id=BODY["id"],
             # private_endpoint=BODY["private_endpoint"],
-            private_link_service_connection_state=BODY["private_link_service_connection_state"])
+            # private_link_service_connection_state=BODY["private_link_service_connection_state"])
         result = result.result()
           
         # PrivateEndpointConnection_GetConnection[get]

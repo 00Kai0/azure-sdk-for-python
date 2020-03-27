@@ -183,17 +183,12 @@ class PrivateEndpointConnectionsOperations(object):
         resource_group_name,  # type: str
         config_store_name,  # type: str
         private_endpoint_connection_name,  # type: str
-        private_endpoint=None,  # type: Optional["models.PrivateEndpoint"]
-        id=None, # type: str
-        private_link_service_connection_state=None,  # type: Optional["models.PrivateLinkServiceConnectionState"]
+        private_endpoint_connection,  # type: "models.PrivateEndpointConnection"
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.PrivateEndpointConnection"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-
-        # _private_endpoint_connection = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
-        _private_endpoint_connection = models.PrivateEndpointConnection(id=id, private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
         api_version = "2019-11-01-preview"
 
         # Construct URL
@@ -217,7 +212,7 @@ class PrivateEndpointConnectionsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_private_endpoint_connection, 'PrivateEndpointConnection')
+        body_content = self._serialize.body(private_endpoint_connection, 'PrivateEndpointConnection')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -247,8 +242,7 @@ class PrivateEndpointConnectionsOperations(object):
         resource_group_name,  # type: str
         config_store_name,  # type: str
         private_endpoint_connection_name,  # type: str
-        private_endpoint=None,  # type: Optional["models.PrivateEndpoint"]
-        private_link_service_connection_state=None,  # type: Optional["models.PrivateLinkServiceConnectionState"]
+        private_endpoint_connection,  # type: "models.PrivateEndpointConnection"
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.PrivateEndpointConnection"
@@ -261,11 +255,8 @@ class PrivateEndpointConnectionsOperations(object):
         :type config_store_name: str
         :param private_endpoint_connection_name: Private endpoint connection name.
         :type private_endpoint_connection_name: str
-        :param private_endpoint: The resource of private endpoint.
-        :type private_endpoint: ~azure.mgmt.appconfiguration.models.PrivateEndpoint
-        :param private_link_service_connection_state: A collection of information about the state of
-     the connection between service consumer and provider.
-        :type private_link_service_connection_state: ~azure.mgmt.appconfiguration.models.PrivateLinkServiceConnectionState
+        :param private_endpoint_connection: The private endpoint connection properties.
+        :type private_endpoint_connection: ~azure.mgmt.appconfiguration.models.PrivateEndpointConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -281,8 +272,7 @@ class PrivateEndpointConnectionsOperations(object):
             resource_group_name=resource_group_name,
             config_store_name=config_store_name,
             private_endpoint_connection_name=private_endpoint_connection_name,
-            private_endpoint=private_endpoint,
-            private_link_service_connection_state=private_link_service_connection_state,
+            private_endpoint_connection=private_endpoint_connection,
             cls=lambda x,y,z: x,
             **kwargs
         )

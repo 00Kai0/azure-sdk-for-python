@@ -8,17 +8,6 @@
 
 from enum import Enum
 
-class IdentityType(str, Enum):
-    """The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an
-    implicitly created identity and a set of user-assigned identities. The type 'None' will remove
-    any identities.
-    """
-
-    none = "None"
-    system_assigned = "SystemAssigned"
-    user_assigned = "UserAssigned"
-    system_assigned_user_assigned = "SystemAssigned, UserAssigned"
-
 class ProvisioningState(str, Enum):
     """The provisioning state of the configuration store.
     """
@@ -45,3 +34,14 @@ class ActionsRequired(str, Enum):
 
     none = "None"
     recreate = "Recreate"
+
+class IdentityType(str, Enum):
+    """The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an
+    implicitly created identity and a set of user-assigned identities. The type 'None' will remove
+    any identities.
+    """
+
+    none = "None"
+    system_assigned = "SystemAssigned"
+    user_assigned = "UserAssigned"
+    system_assigned_user_assigned = "SystemAssigned, UserAssigned"

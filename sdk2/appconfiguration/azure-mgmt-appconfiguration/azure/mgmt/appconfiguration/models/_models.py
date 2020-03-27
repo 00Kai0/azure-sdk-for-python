@@ -196,6 +196,9 @@ class ConfigurationStore(Resource):
     :vartype endpoint: str
     :param encryption: The encryption settings of the configuration store.
     :type encryption: ~azure.mgmt.appconfiguration.models.EncryptionProperties
+    :ivar private_endpoint_connections: private endpoint connections of configuration store.
+    :vartype private_endpoint_connections:
+     list[~azure.mgmt.appconfiguration.models.PrivateEndpointConnection]
     """
 
     _validation = {
@@ -207,6 +210,7 @@ class ConfigurationStore(Resource):
         'provisioning_state': {'readonly': True},
         'creation_date': {'readonly': True},
         'endpoint': {'readonly': True},
+        'private_endpoint_connections': {'readonly': True},
     }
 
     _attribute_map = {
@@ -221,6 +225,7 @@ class ConfigurationStore(Resource):
         'creation_date': {'key': 'properties.creationDate', 'type': 'iso-8601'},
         'endpoint': {'key': 'properties.endpoint', 'type': 'str'},
         'encryption': {'key': 'properties.encryption', 'type': 'EncryptionProperties'},
+        'private_endpoint_connections': {'key': 'properties.privateEndpointConnections', 'type': '[PrivateEndpointConnection]'},
     }
 
     def __init__(
@@ -234,6 +239,7 @@ class ConfigurationStore(Resource):
         self.creation_date = None
         self.endpoint = None
         self.encryption = kwargs.get('encryption', None)
+        self.private_endpoint_connections = None
 
 
 class ConfigurationStoreListResult(msrest.serialization.Model):
@@ -594,8 +600,8 @@ class PrivateEndpointConnection(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :ivar id: The resource ID.
-    :vartype id: str
+    :param id: The resource ID.
+    :type id: str
     :ivar name: The name of the resource.
     :vartype name: str
     :ivar type: The type of the resource.
@@ -612,7 +618,6 @@ class PrivateEndpointConnection(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
         'provisioning_state': {'readonly': True},
@@ -632,7 +637,7 @@ class PrivateEndpointConnection(msrest.serialization.Model):
         **kwargs
     ):
         super(PrivateEndpointConnection, self).__init__(**kwargs)
-        self.id = None
+        self.id = kwargs.get('id', None)
         self.name = None
         self.type = None
         self.provisioning_state = None
