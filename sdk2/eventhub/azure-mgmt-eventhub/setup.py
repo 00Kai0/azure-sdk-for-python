@@ -9,7 +9,7 @@
 
 from setuptools import setup, find_packages
 
-NAME = "eventhubmanagementclient"
+NAME = "azure-mgmt-eventhub"
 VERSION = "1.0.0"
 
 # To install the library, run the following
@@ -29,7 +29,12 @@ setup(
     url="",
     keywords=["Swagger", "EventHubManagementClient"],
     install_requires=REQUIRES,
-    packages=find_packages(),
+    packages=find_packages(
+        'tests',
+        # Exclude packages that will be covered by PEP420 or nspkg
+        'azure',
+        'azure.mgmt',
+    ),
     include_package_data=True,
     long_description="""\
     Azure Event Hubs client.
