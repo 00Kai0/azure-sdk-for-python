@@ -19,13 +19,15 @@
 # covered ops:
 #   operations: 1/1
 #   event_hubs: 10/10
-#   namespaces: /17
+#   namespaces: 17/17
 #   regions: 1/1
-#   disaster_recovery_configs: /10
-#   consumer_groups: /4
+#   disaster_recovery_configs: 10/10
+#   consumer_groups: 4/4
 
+import time
 import unittest
 
+import azure.core
 import azure.mgmt.eventhub
 import azure.mgmt.network
 import azure.mgmt.network.models
@@ -61,6 +63,7 @@ class MgmtEventHubTest(AzureMgmtTestCase):
             storage_name,
             params_create,
         )
+        return result_create.result()
 
     # TODO: use track 2 later
     def create_virtual_network(self, group_name, location, network_name, subnet_name):
@@ -102,13 +105,11 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         SUBNET_NAME = self.get_resource_name("subnet")
         EVENTHUB_NAME = self.get_resource_name("eventhub")
         NAMESPACE_NAME = self.get_resource_name("namespace")
-        NAMESPACE_NAME_2 = self.get_resource_name("namespace2")
         CONSUMERGROUP_NAME = self.get_resource_name("consumergroup")
         STORAGE_ACCOUNT_NAME = self.get_resource_name("storageaccount")
         VIRTUAL_NETWORK_NAME = self.get_resource_name("virtualnetwork")
         NETWORK_RULE_SET_NAME = self.get_resource_name("networkruleset")
         AUTHORIZATION_RULE_NAME = self.get_resource_name("authorizationrule")
-        DISASTER_RECOVERY_CONFIG_NAME = self.get_resource_name("disasterdecoveryconfig")
 
         self.create_storage_account(RESOURCE_GROUP, AZURE_LOCATION, STORAGE_ACCOUNT_NAME)
         self.create_virtual_network(RESOURCE_GROUP, AZURE_LOCATION, VIRTUAL_NETWORK_NAME, SUBNET_NAME)
@@ -130,21 +131,6 @@ class MgmtEventHubTest(AzureMgmtTestCase):
 
         # GetNamespaceMessagingPlan[get]
         result = self.mgmt_client.namespaces.get_messaging_plan(resource_group.name, NAMESPACE_NAME)
-
-        # Second namespace [put]
-        BODY = {
-          "sku": {
-            "name": "Standard",
-            "tier": "Standard"
-          },
-          "location": "eastus",
-          "tags": {
-            "tag1": "value1",
-            "tag2": "value2"
-          }
-        }
-        result = self.mgmt_client.namespaces.begin_create_or_update(resource_group.name, NAMESPACE_NAME_2, BODY)
-        second_namespace = result.result()
 
         # EventHubCreate[put]
         BODY = {
@@ -195,13 +181,6 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         }
         result = self.mgmt_client.namespaces.create_or_update_authorization_rule(resource_group.name, NAMESPACE_NAME, AUTHORIZATION_RULE_NAME, BODY["rights"])
 
-        # EHAliasCreate[put]
-        BODY = {
-          # "partner_namespace": NAMESPACE_NAME_2
-          "partner_namespace": second_namespace.id
-        }
-        result = self.mgmt_client.disaster_recovery_configs.create_or_update(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME, BODY['partner_namespace'])
-
         # ConsumerGroupCreate[put]
         BODY = {
           "user_metadata": "New consumergroup"
@@ -220,23 +199,14 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         # NameSpaceAuthorizationRuleGet[get] TODO: need check
         result = self.mgmt_client.namespaces.get_authorization_rule(resource_group.name, NAMESPACE_NAME, AUTHORIZATION_RULE_NAME)
 
-        # ListAuthorizationRules[get]
-        result = self.mgmt_client.disaster_recovery_configs.list_authorization_rules(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
-
         # EventHubAuthorizationRuleGet[get]
         result = self.mgmt_client.event_hubs.get_authorization_rule(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME, AUTHORIZATION_RULE_NAME)
 
         # ConsumerGroupGet[get]
         result = self.mgmt_client.consumer_groups.get(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME, CONSUMERGROUP_NAME)
 
-        # EHAliasGet[get]
-        result = self.mgmt_client.disaster_recovery_configs.get(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
-
         # EventHubAuthorizationRuleListAll[get]
         result = self.mgmt_client.event_hubs.list_authorization_rules(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME)
-
-        # NameSpaceAuthorizationRuleGet[get]
-        result = self.mgmt_client.disaster_recovery_configs.get_authorization_rule(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME, AUTHORIZATION_RULE_NAME)
 
         # ConsumerGroupsListAll[get]
         result = self.mgmt_client.consumer_groups.list_by_event_hub(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME)
@@ -246,9 +216,6 @@ class MgmtEventHubTest(AzureMgmtTestCase):
 
         # EventHubGet[get]
         result = self.mgmt_client.event_hubs.get(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME)
-
-        # EHAliasList[get]
-        result = self.mgmt_client.disaster_recovery_configs.list(resource_group.name, NAMESPACE_NAME)
 
         # ListAuthorizationRules[get] #TODO: NEED CHECK
         result = self.mgmt_client.namespaces.list_authorization_rules(resource_group.name, NAMESPACE_NAME)
@@ -277,9 +244,6 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         # EHOperations_List[get]
         result = self.mgmt_client.operations.list()
 
-        # NameSpaceAuthorizationRuleListKey[post]
-        result = self.mgmt_client.disaster_recovery_configs.list_keys(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME, AUTHORIZATION_RULE_NAME)
-
         # EventHubAuthorizationRuleRegenerateKey[post]
         BODY = {
           "key_type": "PrimaryKey"
@@ -289,23 +253,11 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         # EventHubAuthorizationRuleListKey[post]
         result = self.mgmt_client.event_hubs.list_keys(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME, AUTHORIZATION_RULE_NAME)
 
-        # EHAliasBreakPairing[post]
-        result = self.mgmt_client.disaster_recovery_configs.break_pairing(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
-
-        # EHAliasFailOver[post]
-        result = self.mgmt_client.disaster_recovery_configs.fail_over(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
-
         # NameSpaceAuthorizationRuleRegenerateKey[post]
         BODY = {
           "key_type": "PrimaryKey"
         }
         result = self.mgmt_client.namespaces.regenerate_keys(resource_group.name, NAMESPACE_NAME, AUTHORIZATION_RULE_NAME, BODY["key_type"])
-
-        # NamespacesCheckNameAvailability[post]
-        BODY = {
-          "name": "sdk-DisasterRecovery-9474"
-        }
-        result = self.mgmt_client.disaster_recovery_configs.check_name_availability(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME, BODY["name"])
 
         # NameSpaceAuthorizationRuleListKey[post] TODO: need check
         result = self.mgmt_client.namespaces.list_keys(resource_group.name, NAMESPACE_NAME, AUTHORIZATION_RULE_NAME)
@@ -324,16 +276,13 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         BODY = {
           "name": "sdk-DisasterRecovery-9474"
         }
-        result = self.mgmt_client.namespaces.check_name_availability(resource_group.name, BODY["name"])
+        result = self.mgmt_client.namespaces.check_name_availability(BODY["name"])
 
         # EventHubAuthorizationRuleDelete[delete]
         result = self.mgmt_client.event_hubs.delete_authorization_rule(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME, AUTHORIZATION_RULE_NAME)
 
         # ConsumerGroupDelete[delete]
         result = self.mgmt_client.consumer_groups.delete(resource_group.name, NAMESPACE_NAME, EVENTHUB_NAME, CONSUMERGROUP_NAME)
-
-        # EHAliasDelete[delete]
-        result = self.mgmt_client.disaster_recovery_configs.delete(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
 
         # NameSpaceAuthorizationRuleDelete[delete]
         result = self.mgmt_client.namespaces.delete_authorization_rule(resource_group.name, NAMESPACE_NAME, AUTHORIZATION_RULE_NAME)
@@ -344,7 +293,107 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         # NameSpaceDelete[delete]
         result = self.mgmt_client.namespaces.begin_delete(resource_group.name, NAMESPACE_NAME)
         result = result.result()
+    
+    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    def test_disaster_recovery_configs(self, resource_group):
+        RESOURCE_GROUP = resource_group.name
+        SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
+        NAMESPACE_NAME = self.get_resource_name("namespacetest")
+        NAMESPACE_NAME_2 = self.get_resource_name("namespace2test")
+        AUTHORIZATION_RULE_NAME = self.get_resource_name("authorizationrule")
+        DISASTER_RECOVERY_CONFIG_NAME = self.get_resource_name("disasterdecoveryconfigtest")
 
+
+        # NamespaceCreate[put]
+        BODY = {
+          "sku": {
+            "name": "Standard",
+            "tier": "Standard"
+          },
+          "location": "South Central US",
+          "tags": {
+            "tag1": "value1",
+            "tag2": "value2"
+          }
+        }
+        result = self.mgmt_client.namespaces.begin_create_or_update(resource_group.name, NAMESPACE_NAME, BODY)
+        primery_namespace = result.result()
+
+        # NameSpaceAuthorizationRuleCreate[put]
+        BODY = {
+          "rights": [
+            "Listen",
+            "Send"
+          ]
+        }
+        result = self.mgmt_client.namespaces.create_or_update_authorization_rule(resource_group.name, NAMESPACE_NAME, AUTHORIZATION_RULE_NAME, BODY["rights"])
+
+        # Second namespace [put]
+        BODY = {
+          "sku": {
+            "name": "Standard",
+            "tier": "Standard"
+          },
+          "location": "eastus",
+          "tags": {
+            "tag1": "value1",
+            "tag2": "value2"
+          }
+        }
+        result = self.mgmt_client.namespaces.begin_create_or_update(resource_group.name, NAMESPACE_NAME_2, BODY)
+        second_namespace = result.result()
+
+        # EHAliasCreate[put]
+        BODY = {
+          # "partner_namespace": NAMESPACE_NAME_2
+          "partner_namespace": second_namespace.id
+        }
+        result = self.mgmt_client.disaster_recovery_configs.create_or_update(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME, BODY["partner_namespace"])
+
+        # EHAliasGet[get]
+        result = self.mgmt_client.disaster_recovery_configs.get(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
+        while result.provisioning_state != "Succeeded":
+            result = self.mgmt_client.disaster_recovery_configs.get(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
+            time.sleep(30)
+        
+        # GetNamespaceMessagingPlan[get]
+        result = self.mgmt_client.namespaces.get_messaging_plan(resource_group.name, NAMESPACE_NAME)
+
+        # ListAuthorizationRules[get]
+        result = self.mgmt_client.disaster_recovery_configs.list_authorization_rules(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
+
+        # NameSpaceAuthorizationRuleGet[get]
+        result = self.mgmt_client.disaster_recovery_configs.get_authorization_rule(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME, AUTHORIZATION_RULE_NAME)
+
+        # EHAliasList[get]
+        result = self.mgmt_client.disaster_recovery_configs.list(resource_group.name, NAMESPACE_NAME)
+
+        # NameSpaceAuthorizationRuleListKey[post]
+        result = self.mgmt_client.disaster_recovery_configs.list_keys(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME, AUTHORIZATION_RULE_NAME)
+
+        # EHAliasBreakPairing[post]
+        result = self.mgmt_client.disaster_recovery_configs.break_pairing(resource_group.name, NAMESPACE_NAME, DISASTER_RECOVERY_CONFIG_NAME)
+
+        # EHAliasFailOver[post]
+        result = self.mgmt_client.disaster_recovery_configs.fail_over(resource_group.name, NAMESPACE_NAME_2, DISASTER_RECOVERY_CONFIG_NAME)
+
+        # DRCCheckNameAvailability[post]
+        BODY = {
+          "name": "sdk-DisasterRecovery-9474"
+        }
+        result = self.mgmt_client.disaster_recovery_configs.check_name_availability(resource_group.name, NAMESPACE_NAME, BODY["name"])
+
+        # EHAliasDelete[delete]
+        while True:
+            try:
+                result = self.mgmt_client.disaster_recovery_configs.delete(resource_group.name, NAMESPACE_NAME_2, DISASTER_RECOVERY_CONFIG_NAME)
+            except azure.core.exceptions.HttpResponseError:
+                time.sleep(30)
+            else:
+                break
+
+
+        
 
 #------------------------------------------------------------------------------
 if __name__ == '__main__':
