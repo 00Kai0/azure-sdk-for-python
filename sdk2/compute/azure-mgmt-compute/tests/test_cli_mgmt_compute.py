@@ -200,7 +200,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
           },
           "disk_size_gb": "200"
         }
-        result = self.mgmt_client.disks.create_or_update(resource_group.name, DISK_NAME, BODY)
+        result = self.mgmt_client.disks.begin_create_or_update(resource_group.name, DISK_NAME, BODY)
         result = result.result()
 
         # TODO: NEED STORAGE
@@ -257,7 +257,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "source_resource_id": "subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Compute/disks/" + DISK_NAME
           }
         }
-        result = self.mgmt_client.disks.create_or_update(resource_group.name, DISK_NAME_4, BODY)
+        result = self.mgmt_client.disks.begin_create_or_update(resource_group.name, DISK_NAME_4, BODY)
         result = result.result()
 
         # TODO: NEED A IMAGE
@@ -286,7 +286,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "upload_size_bytes": "10737418752"
           }
         }
-        result = self.mgmt_client.disks.create_or_update(resource_group.name, DISK_NAME_5, BODY)
+        result = self.mgmt_client.disks.begin_create_or_update(resource_group.name, DISK_NAME_5, BODY)
         result = result.result()
 
         # TODO: New example not in swagger. (doing)
@@ -298,7 +298,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "source_uri": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Compute/disks/" + DISK_NAME
           }
         }
-        result = self.mgmt_client.snapshots.create_or_update(resource_group.name, SNAPSHOT_NAME, BODY)
+        result = self.mgmt_client.snapshots.begin_create_or_update(resource_group.name, SNAPSHOT_NAME, BODY)
         result = result.result()
 
         # Create a virtual machine image from a snapshot.[put]
@@ -316,7 +316,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
           },
           "hyper_vgeneration": "V1"  # TODO: required
         }
-        result = self.mgmt_client.images.create_or_update(resource_group.name, IMAGE_NAME, BODY)
+        result = self.mgmt_client.images.begin_create_or_update(resource_group.name, IMAGE_NAME, BODY)
         result = result.result()
 
         """
@@ -512,7 +512,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
           "location": "eastus",
           "description": "This is the gallery description."
         }
-        result = self.mgmt_client.galleries.create_or_update(resource_group.name, GALLERY_NAME, BODY)
+        result = self.mgmt_client.galleries.begin_create_or_update(resource_group.name, GALLERY_NAME, BODY)
         result = result.result()
 
         # TODO: NNED BLOB
@@ -729,7 +729,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             ]
           }
         }
-        result = self.mgmt_client.virtual_machines.create_or_update(resource_group.name, VIRTUAL_MACHINE_NAME, BODY)
+        result = self.mgmt_client.virtual_machines.begin_create_or_update(resource_group.name, VIRTUAL_MACHINE_NAME, BODY)
         result = result.result()
 
         """
@@ -1217,7 +1217,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "sku": "mySkuName"
           }
         }
-        result = self.mgmt_client.gallery_images.create_or_update(resource_group.name, GALLERY_NAME, IMAGE_NAME, BODY)
+        result = self.mgmt_client.gallery_images.begin_create_or_update(resource_group.name, GALLERY_NAME, IMAGE_NAME, BODY)
         result = result.result()
 
         # Create or update a dedicated host .[put]
@@ -1231,7 +1231,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "name": "DSv3-Type1"
           }
         }
-        result = self.mgmt_client.dedicated_hosts.create_or_update(resource_group.name, HOST_GROUP_NAME, HOST_NAME, BODY)
+        result = self.mgmt_client.dedicated_hosts.begin_create_or_update(resource_group.name, HOST_GROUP_NAME, HOST_NAME, BODY)
         result = result.result()
 
         """
@@ -1654,7 +1654,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
           },
           "upgrade_mode": "Manual"
         }
-        result = self.mgmt_client.virtual_machine_scale_sets.create_or_update(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, BODY)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_create_or_update(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, BODY)
         result = result.result()
 
         """
@@ -2343,7 +2343,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
           # "release_note_uri": "myReleaseNoteUri",
           "supported_os_type": "Windows"
         }
-        result = self.mgmt_client.gallery_applications.create_or_update(resource_group.name, GALLERY_NAME, APPLICATION_NAME, BODY)
+        result = self.mgmt_client.gallery_applications.begin_create_or_update(resource_group.name, GALLERY_NAME, APPLICATION_NAME, BODY)
         result = result.result()
 
         # Create or update a simple Gallery Image Version using snapshots as a source.[put]
@@ -2391,7 +2391,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             # ]
           }
         }
-        result = self.mgmt_client.gallery_image_versions.create_or_update(resource_group.name, GALLERY_NAME, IMAGE_NAME, VERSION_NAME, BODY)
+        result = self.mgmt_client.gallery_image_versions.begin_create_or_update(resource_group.name, GALLERY_NAME, IMAGE_NAME, VERSION_NAME, BODY)
         result = result.result()
 
         # Create virtual machine extension (TODO: need swagger file)
@@ -2785,7 +2785,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "source_uri": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Compute/disks/" + DISK_NAME
           }
         }
-        result = self.mgmt_client.snapshots.update(resource_group.name, SNAPSHOT_NAME, BODY)
+        result = self.mgmt_client.snapshots.begin_update(resource_group.name, SNAPSHOT_NAME, BODY)
         result = result.result()
 
         # TODO: dont finish
@@ -2830,7 +2830,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # result = result.result()
 
         # Start an extension rolling upgrade.[post]
-        result = self.mgmt_client.virtual_machine_scale_set_rolling_upgrades.start_extension_upgrade(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_set_rolling_upgrades.begin_start_extension_upgrade(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
         # TODO:msrestazure.azure_exceptions.CloudError: Azure Error: MaxUnhealthyInstancePercentExceededInRollingUpgrade
@@ -2847,20 +2847,20 @@ class MgmtComputeTest(AzureMgmtTestCase):
         BODY = {
           "disk_size_gb": "200"
         }
-        result = self.mgmt_client.disks.update(resource_group.name, DISK_NAME, BODY)
+        result = self.mgmt_client.disks.begin_update(resource_group.name, DISK_NAME, BODY)
         result = result.result()
 
         # Grant acess disk (TODO: need swagger file)
         ACCESS = "Read"
         DURATION_IN_SECONDS = 1800
-        result = self.mgmt_client.disks.grant_access(resource_group.name, DISK_NAME, ACCESS, DURATION_IN_SECONDS)
+        result = self.mgmt_client.disks.begin_grant_access(resource_group.name, DISK_NAME, ACCESS, DURATION_IN_SECONDS)
         result = result.result()
         # SAS_URI = result.access_sas
 
         # Grant acess snapshot (TODO: need swagger file)
         ACCESS = "Read"
         DURATION_IN_SECONDS = 1800
-        result = self.mgmt_client.snapshots.grant_access(resource_group.name, SNAPSHOT_NAME, ACCESS, DURATION_IN_SECONDS)
+        result = self.mgmt_client.snapshots.begin_grant_access(resource_group.name, SNAPSHOT_NAME, ACCESS, DURATION_IN_SECONDS)
         result = result.result()
 
         # Update availability sets (TODO: need swagger file)
@@ -2906,7 +2906,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             # }
           }
         }
-        result = self.mgmt_client.gallery_image_versions.update(resource_group.name, GALLERY_NAME, IMAGE_NAME, VERSION_NAME, BODY)
+        result = self.mgmt_client.gallery_image_versions.begin_update(resource_group.name, GALLERY_NAME, IMAGE_NAME, VERSION_NAME, BODY)
         result = result.result()
 
         # Update a virtual machine scale set vm (TODO: need a swagger file)
@@ -2931,7 +2931,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "mode": "Manual"
           }
         }
-        result = self.mgmt_client.virtual_machine_scale_sets.update(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, BODY)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_update(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, BODY)
         result = result.result()
 
         # Update instances of machine scale set (TODO: need swagger file)
@@ -2950,7 +2950,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
           }
 
         }
-        result = self.mgmt_client.gallery_applications.update(resource_group.name, GALLERY_NAME, APPLICATION_NAME, BODY)
+        result = self.mgmt_client.gallery_applications.begin_update(resource_group.name, GALLERY_NAME, APPLICATION_NAME, BODY)
         result = result.result()
 
         # Update a proximity placement group.[get]
@@ -2985,15 +2985,15 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # result = result.result()
 
         # VirtualMachineScaleSet restart (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_scale_sets.restart(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_restart(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
         # VirtualMachineScaleSet power off (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_scale_sets.power_off(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_power_off(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
         # VirtualMachineScaleSet start (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_scale_sets.start(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_start(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
         # Update VMSS vm extension (TODO: need swagger file)
@@ -3027,11 +3027,11 @@ class MgmtComputeTest(AzureMgmtTestCase):
         result = self.mgmt_client.virtual_machine_scale_set_extensions.update(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, VMSS_EXTENSION_NAME, BODY)
 
         # Delete virtua machine scale set extension (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_scale_set_extensions.delete(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, VMSS_EXTENSION_NAME)
+        result = self.mgmt_client.virtual_machine_scale_set_extensions.begin_delete(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, VMSS_EXTENSION_NAME)
         result = result.result()
 
         # VirtualMachineScaleSet stop againe.
-        result = self.mgmt_client.virtual_machine_scale_sets.power_off(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_power_off(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
 
@@ -3039,19 +3039,19 @@ class MgmtComputeTest(AzureMgmtTestCase):
         BODY = {
           "command_id": "RunPowerShellScript"
         }
-        result = self.mgmt_client.virtual_machines.run_command(resource_group.name, VIRTUAL_MACHINE_NAME, BODY)
+        result = self.mgmt_client.virtual_machines.begin_run_command(resource_group.name, VIRTUAL_MACHINE_NAME, BODY)
         result = result.result()
 
         # VirtualMachine restart (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machines.restart(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_restart(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # VirtualMachine power off (TODO:need swagger file)
-        result = self.mgmt_client.virtual_machines.power_off(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_power_off(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # VirtualMachine start (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machines.start(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_start(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # Update virtual machine extension (TODO: need swagger file)
@@ -3066,11 +3066,11 @@ class MgmtComputeTest(AzureMgmtTestCase):
         
         # This operation need VM running.
         # Delete virtual machine extension (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_extensions.delete(resource_group.name, VIRTUAL_MACHINE_NAME,VIRTUAL_MACHINE_EXTENSION_NAME)
+        result = self.mgmt_client.virtual_machine_extensions.begin_delete(resource_group.name, VIRTUAL_MACHINE_NAME,VIRTUAL_MACHINE_EXTENSION_NAME)
         result = result.result()
 
         # VirtualMachine power off again.
-        result = self.mgmt_client.virtual_machines.power_off(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_power_off(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # Update a simple gallery image.[patch]
@@ -3084,7 +3084,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "sku": "mySkuName"
           }
         }
-        result = self.mgmt_client.gallery_images.update(resource_group.name, GALLERY_NAME, IMAGE_NAME, BODY)
+        result = self.mgmt_client.gallery_images.begin_update(resource_group.name, GALLERY_NAME, IMAGE_NAME, BODY)
         result = result.result()
 
         # Export logs which contain all throttled Api requests made to Compute Resource Provider within the given time period.[post]
@@ -3100,7 +3100,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # result = result.result()
 
         # Revoke access disk (TODO: need swagger file)
-        result = self.mgmt_client.disks.revoke_access(resource_group.name, DISK_NAME)
+        result = self.mgmt_client.disks.begin_revoke_access(resource_group.name, DISK_NAME)
         result = result.result()
 
         # Redeploy virtual machine scale set vm (TODO: need swagger file)
@@ -3108,15 +3108,15 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # result = result.result()
 
         # Redeploy virtual machine scale set (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_scale_sets.redeploy(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_redeploy(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
         # Reapply the state of a virtual machine.[post]
-        result = self.mgmt_client.virtual_machines.reapply(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_reapply(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # Redeploy the virtual machine. (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machines.redeploy(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_redeploy(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # Perform maintenance virtual machine scale set vms (TODO: need swagger file)
@@ -3211,7 +3211,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             ]
           }
         }
-        result = self.mgmt_client.virtual_machines.update(resource_group.name, VIRTUAL_MACHINE_NAME, BODY)
+        result = self.mgmt_client.virtual_machines.begin_update(resource_group.name, VIRTUAL_MACHINE_NAME, BODY)
         result = result.result()
 
         # Generalize a Virtual Machine.[post]
@@ -3221,7 +3221,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
         BODY = {
           "description": "This is the gallery description."
         }
-        result = self.mgmt_client.galleries.update(resource_group.name, GALLERY_NAME, BODY)
+        result = self.mgmt_client.galleries.begin_update(resource_group.name, GALLERY_NAME, BODY)
         result = result.result()
 
         # Updates tags of an Image.[patch]
@@ -3236,18 +3236,18 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "department": "HR"
           }
         }
-        result = self.mgmt_client.images.update(resource_group.name, IMAGE_NAME, BODY)
+        result = self.mgmt_client.images.begin_update(resource_group.name, IMAGE_NAME, BODY)
         result = result.result()
 
         # Deallocate virtual machine (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machines.deallocate(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_deallocate(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # Deallocate virtual machine scale set vm (TODO: need swagger file)
         # result = self.mgmt_client.virtual_machine_scale_set_vms.deallocate(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, INSTANCE_ID)
 
         # Deallocate virtual machine scale set (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_scale_sets.deallocate(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_deallocate(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
         # TODO: need finish
@@ -3264,34 +3264,34 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # result = self.mgmt_client.virtual_machine_scale_set_vms.delete(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME, INSTANCE_ID)
 
         # Delete virtual machine set (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machine_scale_sets.delete(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
+        result = self.mgmt_client.virtual_machine_scale_sets.begin_delete(resource_group.name, VIRTUAL_MACHINE_SCALE_SET_NAME)
         result = result.result()
 
         # Delete virtual machine (TODO: need swagger file)
-        result = self.mgmt_client.virtual_machines.delete(resource_group.name, VIRTUAL_MACHINE_NAME)
+        result = self.mgmt_client.virtual_machines.begin_delete(resource_group.name, VIRTUAL_MACHINE_NAME)
         result = result.result()
 
         # Delete a gallery Image Version.[delete]
-        result = self.mgmt_client.gallery_image_versions.delete(resource_group.name, GALLERY_NAME, IMAGE_NAME, VERSION_NAME)
+        result = self.mgmt_client.gallery_image_versions.begin_delete(resource_group.name, GALLERY_NAME, IMAGE_NAME, VERSION_NAME)
         result = result.result()
 
         # Delete a gallery Application.[delete]
-        result = self.mgmt_client.gallery_applications.delete(resource_group.name, GALLERY_NAME, APPLICATION_NAME)
+        result = self.mgmt_client.gallery_applications.begin_delete(resource_group.name, GALLERY_NAME, APPLICATION_NAME)
         result = result.result()
 
         # Revoke access snapshot (TODO: need swagger file)
-        result = self.mgmt_client.snapshots.revoke_access(resource_group.name, SNAPSHOT_NAME)
+        result = self.mgmt_client.snapshots.begin_revoke_access(resource_group.name, SNAPSHOT_NAME)
         result = result.result()
 
         # Delete snapshot (TODO: need swagger file)
-        result = self.mgmt_client.snapshots.delete(resource_group.name, SNAPSHOT_NAME)
+        result = self.mgmt_client.snapshots.begin_delete(resource_group.name, SNAPSHOT_NAME)
         result = result.result()
 
         # Delete a proximity placement group.[delete]
         result = self.mgmt_client.proximity_placement_groups.delete(resource_group.name, PROXIMITY_PLACEMENT_GROUP_NAME)
 
         # Delete a dedicated host (TODO: need swagger file)
-        result = self.mgmt_client.dedicated_hosts.delete(resource_group.name, HOST_GROUP_NAME, HOST_NAME)
+        result = self.mgmt_client.dedicated_hosts.begin_delete(resource_group.name, HOST_GROUP_NAME, HOST_NAME)
         result = result.result()
 
         # Delete a dedicated host group (TODO: need swagger file)
@@ -3303,7 +3303,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # result = result.result()
 
         # Delete a gallery image.[delete]
-        result = self.mgmt_client.gallery_images.delete(resource_group.name, GALLERY_NAME, IMAGE_NAME)
+        result = self.mgmt_client.gallery_images.begin_delete(resource_group.name, GALLERY_NAME, IMAGE_NAME)
         result = result.result()
 
         # TODO: NEED ENCRYPTION SET
@@ -3312,18 +3312,18 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # result = result.result()
 
         # Delete a image.  (TODO: need a swagger file)
-        result = self.mgmt_client.images.delete(resource_group.name, IMAGE_NAME)
+        result = self.mgmt_client.images.begin_delete(resource_group.name, IMAGE_NAME)
         result = result.result()
 
         # Delete disk (TODO: need swagger file)
-        result = self.mgmt_client.disks.delete(resource_group.name, DISK_NAME)
+        result = self.mgmt_client.disks.begin_delete(resource_group.name, DISK_NAME)
         result = result.result()
 
         # Delete availability sets (TODO: need a swagger file)
         resout = self.mgmt_client.availability_sets.delete(resource_group.name, AVAILABILITY_SET_NAME)
 
         # Delete a gallery.[delete]
-        result = self.mgmt_client.galleries.delete(resource_group.name, GALLERY_NAME)
+        result = self.mgmt_client.galleries.begin_delete(resource_group.name, GALLERY_NAME)
         result = result.result()
 
 

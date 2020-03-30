@@ -1,0 +1,295 @@
+interactions:
+- request:
+    body: '{"sku": {"name": "Standard_GRS"}, "kind": "StorageV2", "location": "westeurope",
+      "tags": {"key1": "value1", "key2": "value2"}, "properties": {"encryption": {"services":
+      {"blob": {"enabled": true, "keyType": "Account"}, "file": {"enabled": true,
+      "keyType": "Account"}}, "keySource": "Microsoft.Storage"}}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '304'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-azure-mgmt-storage/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storage_test_storagef61c0e02/providers/Microsoft.Storage/storageAccounts/storageaccountxxyyzz?api-version=2019-06-01
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '0'
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Mon, 30 Mar 2020 07:42:33 GMT
+      expires:
+      - '-1'
+      location:
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westeurope/asyncoperations/37fe121f-9ae7-466d-8ba3-5e8848b6854b?monitor=true&api-version=2019-06-01
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1199'
+    status:
+      code: 202
+      message: Accepted
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-azure-mgmt-storage/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westeurope/asyncoperations/37fe121f-9ae7-466d-8ba3-5e8848b6854b?monitor=true&api-version=2019-06-01
+  response:
+    body:
+      string: '{"sku":{"name":"Standard_GRS","tier":"Standard"},"kind":"StorageV2","id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storage_test_storagef61c0e02/providers/Microsoft.Storage/storageAccounts/storageaccountxxyyzz","name":"storageaccountxxyyzz","type":"Microsoft.Storage/storageAccounts","location":"westeurope","tags":{"key1":"value1","key2":"value2"},"properties":{"privateEndpointConnections":[],"networkAcls":{"bypass":"AzureServices","virtualNetworkRules":[],"ipRules":[],"defaultAction":"Allow"},"supportsHttpsTrafficOnly":true,"encryption":{"services":{"file":{"keyType":"Account","enabled":true,"lastEnabledTime":"2020-03-30T07:42:33.5662377Z"},"blob":{"keyType":"Account","enabled":true,"lastEnabledTime":"2020-03-30T07:42:33.5662377Z"}},"keySource":"Microsoft.Storage"},"accessTier":"Hot","provisioningState":"Succeeded","creationTime":"2020-03-30T07:42:33.5037197Z","primaryEndpoints":{"dfs":"https://storageaccountxxyyzz.dfs.core.windows.net/","web":"https://storageaccountxxyyzz.z6.web.core.windows.net/","blob":"https://storageaccountxxyyzz.blob.core.windows.net/","queue":"https://storageaccountxxyyzz.queue.core.windows.net/","table":"https://storageaccountxxyyzz.table.core.windows.net/","file":"https://storageaccountxxyyzz.file.core.windows.net/"},"primaryLocation":"westeurope","statusOfPrimary":"available","secondaryLocation":"northeurope","statusOfSecondary":"available"}}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '1430'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Mar 2020 07:42:51 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"sku": {"name": "Standard_GRS"}, "kind": "BlobStorage", "location": "westeurope",
+      "tags": {"key1": "value1", "key2": "value2"}, "properties": {"encryption": {"services":
+      {"blob": {"enabled": true, "keyType": "Account"}, "file": {"enabled": true,
+      "keyType": "Account"}}, "keySource": "Microsoft.Storage"}, "accessTier": "Hot"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '327'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-azure-mgmt-storage/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storage_test_storagef61c0e02/providers/Microsoft.Storage/storageAccounts/storageaccountxxyyzz2?api-version=2019-06-01
+  response:
+    body:
+      string: ''
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '0'
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Mon, 30 Mar 2020 07:42:56 GMT
+      expires:
+      - '-1'
+      location:
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westeurope/asyncoperations/0f6986a5-eae9-44de-a68f-071dd8d93b57?monitor=true&api-version=2019-06-01
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1198'
+    status:
+      code: 202
+      message: Accepted
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-azure-mgmt-storage/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/locations/westeurope/asyncoperations/0f6986a5-eae9-44de-a68f-071dd8d93b57?monitor=true&api-version=2019-06-01
+  response:
+    body:
+      string: '{"sku":{"name":"Standard_GRS","tier":"Standard"},"kind":"BlobStorage","id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storage_test_storagef61c0e02/providers/Microsoft.Storage/storageAccounts/storageaccountxxyyzz2","name":"storageaccountxxyyzz2","type":"Microsoft.Storage/storageAccounts","location":"westeurope","tags":{"key1":"value1","key2":"value2"},"properties":{"privateEndpointConnections":[],"networkAcls":{"bypass":"AzureServices","virtualNetworkRules":[],"ipRules":[],"defaultAction":"Allow"},"supportsHttpsTrafficOnly":true,"encryption":{"services":{"file":{"keyType":"Account","enabled":true,"lastEnabledTime":"2020-03-30T07:42:55.8527489Z"},"blob":{"keyType":"Account","enabled":true,"lastEnabledTime":"2020-03-30T07:42:55.8527489Z"}},"keySource":"Microsoft.Storage"},"accessTier":"Hot","provisioningState":"Succeeded","creationTime":"2020-03-30T07:42:55.7745863Z","primaryEndpoints":{"dfs":"https://storageaccountxxyyzz2.dfs.core.windows.net/","blob":"https://storageaccountxxyyzz2.blob.core.windows.net/","table":"https://storageaccountxxyyzz2.table.core.windows.net/"},"primaryLocation":"westeurope","statusOfPrimary":"available","secondaryLocation":"northeurope","statusOfSecondary":"available"}}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '1251'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Mar 2020 07:43:13 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"properties": {"cors": {"corsRules": [{"allowedOrigins": ["http://www.contoso.com",
+      "http://www.fabrikam.com"], "allowedMethods": ["GET", "HEAD", "POST", "OPTIONS",
+      "MERGE", "PUT"], "maxAgeInSeconds": 100, "exposedHeaders": ["x-ms-meta-*"],
+      "allowedHeaders": ["x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*"]},
+      {"allowedOrigins": ["*"], "allowedMethods": ["GET"], "maxAgeInSeconds": 2, "exposedHeaders":
+      ["*"], "allowedHeaders": ["*"]}, {"allowedOrigins": ["http://www.abc23.com",
+      "https://www.fabrikam.com/*"], "allowedMethods": ["GET", "PUT"], "maxAgeInSeconds":
+      2000, "exposedHeaders": ["x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*"],
+      "allowedHeaders": ["x-ms-meta-12345675754564*"]}]}}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '709'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-azure-mgmt-storage/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storage_test_storagef61c0e02/providers/Microsoft.Storage/storageAccounts/storageaccountxxyyzz/fileServices/default?api-version=2019-06-01
+  response:
+    body:
+      string: '{"id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storage_test_storagef61c0e02/providers/Microsoft.Storage/storageAccounts/storageaccountxxyyzz/fileServices/default","name":"default","type":"Microsoft.Storage/storageAccounts/fileServices","properties":{"cors":{"corsRules":[{"allowedOrigins":["http://www.contoso.com","http://www.fabrikam.com"],"allowedMethods":["GET","HEAD","POST","OPTIONS","MERGE","PUT"],"maxAgeInSeconds":100,"exposedHeaders":["x-ms-meta-*"],"allowedHeaders":["x-ms-meta-abc","x-ms-meta-data*","x-ms-meta-target*"]},{"allowedOrigins":["*"],"allowedMethods":["GET"],"maxAgeInSeconds":2,"exposedHeaders":["*"],"allowedHeaders":["*"]},{"allowedOrigins":["http://www.abc23.com","https://www.fabrikam.com/*"],"allowedMethods":["GET","PUT"],"maxAgeInSeconds":2000,"exposedHeaders":["x-ms-meta-abc","x-ms-meta-data*","x-ms-meta-target*"],"allowedHeaders":["x-ms-meta-12345675754564*"]}]}}}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '941'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Mar 2020 07:43:22 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1197'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"properties": {"cors": {"corsRules": [{"allowedOrigins": ["http://www.contoso.com",
+      "http://www.fabrikam.com"], "allowedMethods": ["GET", "HEAD", "POST", "OPTIONS",
+      "MERGE", "PUT"], "maxAgeInSeconds": 100, "exposedHeaders": ["x-ms-meta-*"],
+      "allowedHeaders": ["x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*"]},
+      {"allowedOrigins": ["*"], "allowedMethods": ["GET"], "maxAgeInSeconds": 2, "exposedHeaders":
+      ["*"], "allowedHeaders": ["*"]}, {"allowedOrigins": ["http://www.abc23.com",
+      "https://www.fabrikam.com/*"], "allowedMethods": ["GET", "PUT"], "maxAgeInSeconds":
+      2000, "exposedHeaders": ["x-ms-meta-abc", "x-ms-meta-data*", "x -ms-meta-target*"],
+      "allowedHeaders": ["x-ms-meta-12345675754564*"]}]}, "defaultServiceVersion":
+      "2017-07-29", "deleteRetentionPolicy": {"enabled": true, "days": 300}, "isVersioningEnabled":
+      true}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '835'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-azure-mgmt-storage/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_storage_test_storagef61c0e02/providers/Microsoft.Storage/storageAccounts/storageaccountxxyyzz2/blobServices/default?api-version=2019-06-01
+  response:
+    body:
+      string: '{"error":{"code":"FeatureNotSupportedForAccount","message":"Automatic
+        Snapshot is not supported for the account."}}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '115'
+      content-type:
+      - application/json
+      date:
+      - Mon, 30 Mar 2020 07:43:23 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1196'
+    status:
+      code: 409
+      message: Conflict
+version: 1

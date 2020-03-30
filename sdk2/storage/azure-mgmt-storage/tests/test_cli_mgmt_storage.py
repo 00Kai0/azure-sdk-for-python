@@ -33,7 +33,7 @@
 import datetime as dt
 import unittest
 
-import azure.mgmt.storage
+import azure.mgmt.storage.v2019_06_01
 # import azure.mgmt.network
 from devtools_testutils import AzureMgmtTestCase, ResourceGroupPreparer
 
@@ -57,7 +57,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
     def setUp(self):
         super(MgmtStorageTest, self).setUp()
         self.mgmt_client = self.create_mgmt_client(
-            azure.mgmt.storage.StorageManagementClient
+            azure.mgmt.storage.v2019_06_01.StorageManagementClient
         )
         # self.network_client = self.create_mgmt_client(
         #   azure.mgmt.network.NetworkManagementClient
@@ -70,6 +70,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
         RESOURCE_GROUP = resource_group.name
         STORAGE_ACCOUNT_NAME = "storageaccountxxyyzz"
+        STORAGE_ACCOUNT_NAME_2 = "storageaccountxxyyzz2"
         FILE_SERVICE_NAME = "fileservicexxyyzz"
         SHARE_NAME = "filesharenamexxyyzz"
         BLOB_SERVICE_NAME = "blobservicexxyyzz"
@@ -206,10 +207,8 @@ class MgmtStorageTest(AzureMgmtTestCase):
           "sku": {
             "name": "Standard_GRS"
           },
-          # "kind": "Storage",
           "kind": "StorageV2",  # Storage v2 support policy
           "location": "westeurope",
-
           # TODO: The value 'True' is not allowed for property isHnsEnabled
           # "is_hns_enabled": True,
           # TODO:Unsupport
@@ -231,7 +230,6 @@ class MgmtStorageTest(AzureMgmtTestCase):
             },
             "key_source": "Microsoft.Storage"
           },
-
           "tags": {
             "key1": "value1",
             "key2": "value2"
@@ -380,7 +378,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
           #   "enabled": True
           # }
         }
-        result = self.mgmt_client.blob_services.set_service_properties(resource_group.name, STORAGE_ACCOUNT_NAME, BODY)
+        result = self.mgmt_client.blob_services.set_service_properties(resource_group.name, STORAGE_ACCOUNT_NAME_2, BODY)
 
         # TODO: don't have encryption scopes
         # # StorageAccountPutEncryptionScope[put]

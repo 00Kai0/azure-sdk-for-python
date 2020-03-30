@@ -434,6 +434,7 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         **kwargs
     ) -> None:
         """Checks whether a resource exists.
@@ -449,6 +450,8 @@ class ResourcesOperations:
         :type resource_type: str
         :param resource_name: The name of the resource to check whether it exists.
         :type resource_name: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -456,7 +459,6 @@ class ResourcesOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self.check_existence.metadata['url']
@@ -499,11 +501,11 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         **kwargs
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self._delete_initial.metadata['url']
@@ -545,6 +547,7 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         **kwargs
     ) -> None:
         """Deletes a resource.
@@ -560,6 +563,8 @@ class ResourcesOperations:
         :type resource_type: str
         :param resource_name: The name of the resource to delete.
         :type resource_name: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -577,6 +582,7 @@ class ResourcesOperations:
             parent_resource_path=parent_resource_path,
             resource_type=resource_type,
             resource_name=resource_name,
+            api_version=api_version,
             cls=lambda x,y,z: x,
             **kwargs
         )
@@ -602,12 +608,12 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self._create_or_update_initial.metadata['url']
@@ -663,6 +669,7 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
@@ -679,6 +686,8 @@ class ResourcesOperations:
         :type resource_type: str
         :param resource_name: The name of the resource to create.
         :type resource_name: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :param parameters: Parameters for creating or updating the resource.
         :type parameters: ~azure.mgmt.resource.resources.v2019_10_01.models.GenericResource
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -698,6 +707,7 @@ class ResourcesOperations:
             parent_resource_path=parent_resource_path,
             resource_type=resource_type,
             resource_name=resource_name,
+            api_version=api_version,
             parameters=parameters,
             cls=lambda x,y,z: x,
             **kwargs
@@ -727,12 +737,12 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self._update_initial.metadata['url']
@@ -785,6 +795,7 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
@@ -801,6 +812,8 @@ class ResourcesOperations:
         :type resource_type: str
         :param resource_name: The name of the resource to update.
         :type resource_name: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :param parameters: Parameters for updating the resource.
         :type parameters: ~azure.mgmt.resource.resources.v2019_10_01.models.GenericResource
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -820,6 +833,7 @@ class ResourcesOperations:
             parent_resource_path=parent_resource_path,
             resource_type=resource_type,
             resource_name=resource_name,
+            api_version=api_version,
             parameters=parameters,
             cls=lambda x,y,z: x,
             **kwargs
@@ -849,6 +863,7 @@ class ResourcesOperations:
         parent_resource_path: str,
         resource_type: str,
         resource_name: str,
+        api_version: str,
         **kwargs
     ) -> "models.GenericResource":
         """Gets a resource.
@@ -864,6 +879,8 @@ class ResourcesOperations:
         :type resource_type: str
         :param resource_name: The name of the resource to get.
         :type resource_name: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: GenericResource or the result of cls(response)
         :rtype: ~azure.mgmt.resource.resources.v2019_10_01.models.GenericResource
@@ -871,7 +888,6 @@ class ResourcesOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self.get.metadata['url']
@@ -913,6 +929,7 @@ class ResourcesOperations:
     async def check_existence_by_id(
         self,
         resource_id: str,
+        api_version: str,
         **kwargs
     ) -> None:
         """Checks by ID whether a resource exists.
@@ -921,6 +938,8 @@ class ResourcesOperations:
          resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-
          name}/{resource-provider-namespace}/{resource-type}/{resource-name}.
         :type resource_id: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -928,7 +947,6 @@ class ResourcesOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self.check_existence_by_id.metadata['url']
@@ -962,11 +980,11 @@ class ResourcesOperations:
     async def _delete_by_id_initial(
         self,
         resource_id: str,
+        api_version: str,
         **kwargs
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self._delete_by_id_initial.metadata['url']
@@ -999,6 +1017,7 @@ class ResourcesOperations:
     async def delete_by_id(
         self,
         resource_id: str,
+        api_version: str,
         **kwargs
     ) -> None:
         """Deletes a resource by ID.
@@ -1007,6 +1026,8 @@ class ResourcesOperations:
      resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-
      name}/{resource-provider-namespace}/{resource-type}/{resource-name}.
         :type resource_id: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
@@ -1020,6 +1041,7 @@ class ResourcesOperations:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         raw_result = await self._delete_by_id_initial(
             resource_id=resource_id,
+            api_version=api_version,
             cls=lambda x,y,z: x,
             **kwargs
         )
@@ -1041,12 +1063,12 @@ class ResourcesOperations:
     async def _create_or_update_by_id_initial(
         self,
         resource_id: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self._create_or_update_by_id_initial.metadata['url']
@@ -1093,6 +1115,7 @@ class ResourcesOperations:
     async def create_or_update_by_id(
         self,
         resource_id: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
@@ -1102,6 +1125,8 @@ class ResourcesOperations:
      resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-
      name}/{resource-provider-namespace}/{resource-type}/{resource-name}.
         :type resource_id: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :param parameters: Create or update resource parameters.
         :type parameters: ~azure.mgmt.resource.resources.v2019_10_01.models.GenericResource
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -1117,6 +1142,7 @@ class ResourcesOperations:
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         raw_result = await self._create_or_update_by_id_initial(
             resource_id=resource_id,
+            api_version=api_version,
             parameters=parameters,
             cls=lambda x,y,z: x,
             **kwargs
@@ -1142,12 +1168,12 @@ class ResourcesOperations:
     async def _update_by_id_initial(
         self,
         resource_id: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self._update_by_id_initial.metadata['url']
@@ -1191,6 +1217,7 @@ class ResourcesOperations:
     async def update_by_id(
         self,
         resource_id: str,
+        api_version: str,
         parameters: "models.GenericResource",
         **kwargs
     ) -> "models.GenericResource":
@@ -1200,6 +1227,8 @@ class ResourcesOperations:
      resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-
      name}/{resource-provider-namespace}/{resource-type}/{resource-name}.
         :type resource_id: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :param parameters: Update resource parameters.
         :type parameters: ~azure.mgmt.resource.resources.v2019_10_01.models.GenericResource
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -1215,6 +1244,7 @@ class ResourcesOperations:
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         raw_result = await self._update_by_id_initial(
             resource_id=resource_id,
+            api_version=api_version,
             parameters=parameters,
             cls=lambda x,y,z: x,
             **kwargs
@@ -1240,6 +1270,7 @@ class ResourcesOperations:
     async def get_by_id(
         self,
         resource_id: str,
+        api_version: str,
         **kwargs
     ) -> "models.GenericResource":
         """Gets a resource by ID.
@@ -1248,6 +1279,8 @@ class ResourcesOperations:
          resource type. Use the format, /subscriptions/{guid}/resourceGroups/{resource-group-
          name}/{resource-provider-namespace}/{resource-type}/{resource-name}.
         :type resource_id: str
+        :param api_version: The API version to use for the operation.
+        :type api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: GenericResource or the result of cls(response)
         :rtype: ~azure.mgmt.resource.resources.v2019_10_01.models.GenericResource
@@ -1255,7 +1288,6 @@ class ResourcesOperations:
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.GenericResource"]
         error_map = kwargs.pop('error_map', {404: ResourceNotFoundError, 409: ResourceExistsError})
-        api_version = "2019-10-01"
 
         # Construct URL
         url = self.get_by_id.metadata['url']
