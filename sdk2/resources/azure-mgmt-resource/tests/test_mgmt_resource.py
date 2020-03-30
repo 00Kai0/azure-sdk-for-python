@@ -237,6 +237,7 @@ class MgmtResourceTest(AzureMgmtTestCase):
             parent_resource_path="",
             resource_type="availabilitySets",
             resource_name=resource_name,
+            api_version="2019-10-01"
         )
         self.assertFalse(resource_exist)
 
@@ -248,41 +249,42 @@ class MgmtResourceTest(AzureMgmtTestCase):
             resourcename=resource_name_2
         )
         resource_exist = self.resource_client.resources.check_existence_by_id(
-            resource_id
+            resource_id,
+            api_version="2019-10-01"
         )
 
-        create_result = self.resource_client_v07.resources.begin_create_or_update_by_id(
+        create_result = self.resource_client.resources.begin_create_or_update_by_id(
             resource_id,
             parameters={'location': self.region},
-            # api_version="2019-07-01"
+            api_version="2019-07-01"
         )
         result = create_result.result()
 
-        create_result = self.resource_client_v07.resources.begin_create_or_update(
+        create_result = self.resource_client.resources.begin_create_or_update(
             resource_group_name=resource_group.name,
             resource_provider_namespace="Microsoft.Compute",
             parent_resource_path="",
             resource_type="availabilitySets",
             resource_name=resource_name,
             parameters={'location': self.region},
-            # api_version="2019-07-01"
+            api_version="2019-07-01"
         )
         result = create_result.result()
         self.assertEqual(result.name, resource_name)
 
-        get_result = self.resource_client_v07.resources.get(
+        get_result = self.resource_client.resources.get(
             resource_group_name=resource_group.name,
             resource_provider_namespace="Microsoft.Compute",
             parent_resource_path="",
             resource_type="availabilitySets",
             resource_name=resource_name,
-            # api_version="2019-07-01"
+            api_version="2019-07-01"
         )
         self.assertEqual(get_result.name, resource_name)
 
-        get_result = self.resource_client_v07.resources.get_by_id(
+        get_result = self.resource_client.resources.get_by_id(
             resource_id,
-            # api_version="2019-07-01"
+            api_version="2019-07-01"
         )
 
         resources = list(self.resource_client.resources.list(
@@ -307,14 +309,14 @@ class MgmtResourceTest(AzureMgmtTestCase):
            [get_result.id],
            new_group.id
         )
-        async_move.wait()
+        async_move.result()
 
         async_move = self.resource_client.resources.begin_move_resources(
            resource_group.name,
            [get_result.id],
            new_group.id
         )
-        async_move.wait()
+        async_move.result()
 
         new_resource_id = "/subscriptions/{guid}/resourceGroups/{resourcegroupname}/providers/{resourceprovidernamespace}/{resourcetype}/{resourcename}".format(
             guid=SUBSCRIPTION_ID,
@@ -324,40 +326,40 @@ class MgmtResourceTest(AzureMgmtTestCase):
             resourcename=resource_name_2
         )
 
-        """TODO: azure.core.exceptions.ServiceResponseError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',))
-        update_result = self.resource_client_v07.resources.begin_update(
+        # TODO: azure.core.exceptions.ServiceResponseError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',))
+        update_result = self.resource_client.resources.begin_update(
             resource_group_name=resource_group.name,
             resource_provider_namespace="Microsoft.Compute",
             parent_resource_path="",
             resource_type="availabilitySets",
             resource_name=resource_name,
-            parameters={'properties': {"platform_fault_domain_count": 2}},
-            # api_version="2019-07-01"
+            # parameters={'properties': {"platform_fault_domain_count": 2}},
+            parameters={'tags': {"tag1": "value1"}},
+            api_version="2019-07-01"
         )
         result = update_result.result()
 
-        update_result = self.resource_client_v07.resources.begin_update_by_id(
+        update_result = self.resource_client.resources.begin_update_by_id(
             new_resource_id,
-            parameters={'properties': {"platform_fault_domain_count": 2}},
-            # parameters={'tags': {"tag1": "value1"}},
-            # api_version="2019-07-01"
+            # parameters={'properties': {"platform_fault_domain_count": 2}},
+            parameters={'tags': {"tag1": "value1"}},
+            api_version="2019-07-01"
         )
         result = update_result.result()
-        """
 
-        delete_result = self.resource_client_v07.resources.begin_delete(
+        delete_result = self.resource_client.resources.begin_delete(
             resource_group_name=resource_group.name, # new_group_name,
             resource_provider_namespace="Microsoft.Compute",
             parent_resource_path="",
             resource_type="availabilitySets",
             resource_name=resource_name,
-            # api_version="2019-07-01"
+            api_version="2019-07-01"
         )
         delete_result.wait()
 
-        result = self.resource_client_v07.resources.begin_delete_by_id(
+        result = self.resource_client.resources.begin_delete_by_id(
             new_resource_id,
-            # api_version="2019-07-01"
+            api_version="2019-07-01"
         )
         result = result.result()
 

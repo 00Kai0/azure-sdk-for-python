@@ -214,7 +214,9 @@ interactions:
         US","West India","East US 2","Australia Central","Germany West Central","Norway
         East","Switzerland North","North Central US","UK West","Australia Southeast","Korea
         South","Canada Central","West Europe","South India","West Central US","East
-        Asia (Stage)","North Central US (Stage)","West US","Central US","West US 2"],"apiVersions":["2019-08-01","2019-02-01","2018-11-01","2018-08-01","2018-02-01","2017-08-01","2016-09-01","2016-03-01","2015-08-01","2015-07-01","2015-06-01","2015-05-01","2015-04-01","2015-02-01","2014-11-01","2014-06-01","2014-04-01"],"apiProfiles":[{"profileVersion":"2017-03-09-profile","apiVersion":"2016-09-01"},{"profileVersion":"2018-03-01-hybrid","apiVersion":"2017-08-01"},{"profileVersion":"2018-06-01-profile","apiVersion":"2018-02-01"},{"profileVersion":"2019-03-01-hybrid","apiVersion":"2018-02-01"}],"capabilities":"None"},{"resourceType":"deploymentLocations","locations":["Central
+        Asia (Stage)","North Central US (Stage)","West US","Central US","West US 2"],"apiVersions":["2019-08-01","2019-02-01","2018-11-01","2018-08-01","2018-02-01","2017-08-01","2016-09-01","2016-03-01","2015-08-01","2015-07-01","2015-06-01","2015-05-01","2015-04-01","2015-02-01","2014-11-01","2014-06-01","2014-04-01"],"apiProfiles":[{"profileVersion":"2017-03-09-profile","apiVersion":"2016-09-01"},{"profileVersion":"2018-03-01-hybrid","apiVersion":"2017-08-01"},{"profileVersion":"2018-06-01-profile","apiVersion":"2018-02-01"},{"profileVersion":"2019-03-01-hybrid","apiVersion":"2018-02-01"}],"capabilities":"None"},{"resourceType":"kubeEnvironments","locations":["North
+        Central US (Stage)"],"apiVersions":["2019-08-01","2019-02-01","2019-01-01","2018-11-01","2018-08-01","2018-05-01-preview","2018-02-01","2017-08-01","2016-09-01","2016-03-01","2015-08-01","2015-07-01","2015-06-01","2015-05-01","2015-04-01","2015-02-01","2014-11-01","2014-06-01","2014-04-01"],"apiProfiles":[{"profileVersion":"2017-03-09-profile","apiVersion":"2016-09-01"},{"profileVersion":"2018-03-01-hybrid","apiVersion":"2017-08-01"},{"profileVersion":"2018-06-01-profile","apiVersion":"2018-02-01"}],"capabilities":"CrossResourceGroupResourceMove,
+        CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"},{"resourceType":"deploymentLocations","locations":["Central
         US","North Europe","West Europe","Southeast Asia","Korea Central","Korea South","West
         US","East US","Japan West","Japan East","East Asia","East US 2","North Central
         US","South Central US","Brazil South","Australia East","Australia Southeast","West
@@ -335,11 +337,11 @@ interactions:
       cache-control:
       - no-cache
       content-length:
-      - '49146'
+      - '49818'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Sun, 22 Mar 2020 12:57:21 GMT
+      - Mon, 30 Mar 2020 08:16:33 GMT
       expires:
       - '-1'
       pragma:
