@@ -17,7 +17,7 @@
 # ----------------------
 
 # covered ops:
-#   configuration_stores: 8/9
+#   configuration_stores: 9/9
 #   operations: 2/2
 #   private_endpoint_connections: 4/4
 #   private_link_resources: 2/2
@@ -27,9 +27,19 @@ import unittest
 
 import azure.mgmt.appconfiguration
 import azure.mgmt.network
+from azure.appconfiguration import (
+    AzureAppConfigurationClient,
+    ConfigurationSetting
+)
 from devtools_testutils import AzureMgmtTestCase, ResourceGroupPreparer
 
 AZURE_LOCATION = 'eastus'
+KEY_UUID = "test_key_a6af8952-54a6-11e9-b600-2816a84d0309"
+LABEL_UUID = "1d7b2b28-549e-11e9-b51c-2816a84d0309"
+KEY = "PYTHON_UNIT_" + KEY_UUID
+LABEL = "test_label1_" + LABEL_UUID
+TEST_CONTENT_TYPE = "test content type"
+TEST_VALUE = "test value"
 
 class MgmtAppConfigurationTest(AzureMgmtTestCase):
 
@@ -42,6 +52,19 @@ class MgmtAppConfigurationTest(AzureMgmtTestCase):
         self.network_client = self.create_mgmt_client(
           azure.mgmt.network.NetworkManagementClient
         )
+
+    def create_kv(self, connection_str):
+        app_config_client = AzureAppConfigurationClient.from_connection_string(connection_str)
+        kv = ConfigurationSetting(
+            key=KEY,
+            label=LABEL,
+            value=TEST_VALUE,
+            content_type=TEST_CONTENT_TYPE,
+            tags={"tag1": "tag1", "tag2": "tag2"}
+        )
+        created_kv = app_config_client.add_configuration_setting(kv)
+        return created_kv
+        
 
     # TODO: update to track 2 version later
     def create_endpoint(self, group_name, vnet_name, sub_net, endpoint_name, conf_store_id):
@@ -95,7 +118,43 @@ class MgmtAppConfigurationTest(AzureMgmtTestCase):
         result = self.network_client.private_endpoints.create_or_update(group_name, endpoint_name, BODY)
 
         return result.result()
-    
+
+    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    def test_appconfiguration_list_key_values(self, resource_group):
+        CONFIGURATION_STORE_NAME = self.get_resource_name("configuration")
+
+        # ConfigurationStores_Create[put]
+        BODY = {
+          "location": "westus",
+          "sku": {
+            "name": "Standard"  # Free can not use private endpoint
+          },
+          "tags": {
+            "my_tag": "myTagValue"
+          }
+        }
+        result = self.mgmt_client.configuration_stores.begin_create(resource_group.name, CONFIGURATION_STORE_NAME, BODY)
+        conf_store = result.result()
+
+        # ConfigurationStores_ListKeys[post]
+        keys = list(self.mgmt_client.configuration_stores.list_keys(resource_group.name, CONFIGURATION_STORE_NAME))
+
+        # ConfigurationStores_RegenerateKey[post]
+        BODY = {
+          "id": keys[0].id
+        }
+        key = self.mgmt_client.configuration_stores.regenerate_key(resource_group.name, CONFIGURATION_STORE_NAME, BODY["id"])
+
+        # create key-value
+        self.create_kv(key.connection_string)
+
+        # ConfigurationStores_ListKeyValue[post]
+        BODY = {
+          "key": KEY,
+          "label": LABEL
+        }
+        result = self.mgmt_client.configuration_stores.list_key_value(resource_group.name, CONFIGURATION_STORE_NAME, BODY["key"], BODY["label"])
+
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_appconfiguration(self, resource_group):
 
@@ -188,23 +247,6 @@ class MgmtAppConfigurationTest(AzureMgmtTestCase):
 
         # ConfigurationStores_List[get]
         result = self.mgmt_client.configuration_stores.list()
-
-        # ConfigurationStores_ListKeys[post]
-        keys = list(self.mgmt_client.configuration_stores.list_keys(resource_group.name, CONFIGURATION_STORE_NAME))
-
-        # ConfigurationStores_RegenerateKey[post]
-        BODY = {
-          "id": keys[0].id
-        }
-        result = self.mgmt_client.configuration_stores.regenerate_key(resource_group.name, CONFIGURATION_STORE_NAME, BODY["id"])
-
-        # TODO: azure.core.exceptions.HttpResponseError: (InternalServerError) Cannot serve the request. Please retry.
-        # ConfigurationStores_ListKeyValue[post]
-        # BODY = {
-        #   "key": "MaxRequests",
-        #   "label": "dev"
-        # }
-        # result = self.mgmt_client.configuration_stores.list_key_value(resource_group.name, CONFIGURATION_STORE_NAME, BODY["key"], BODY["label"])
 
         # ConfigurationStores_Update[patch]
         BODY = {
