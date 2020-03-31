@@ -70,7 +70,6 @@ class MgmtStorageTest(AzureMgmtTestCase):
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
         RESOURCE_GROUP = resource_group.name
         STORAGE_ACCOUNT_NAME = "storageaccountxxyyzz"
-        STORAGE_ACCOUNT_NAME_2 = "storageaccountxxyyzz2"
         FILE_SERVICE_NAME = "fileservicexxyyzz"
         SHARE_NAME = "filesharenamexxyyzz"
         BLOB_SERVICE_NAME = "blobservicexxyyzz"
@@ -372,13 +371,13 @@ class MgmtStorageTest(AzureMgmtTestCase):
             "enabled": True,
             "days": "300"
           },
-          "is_versioning_enabled": True,
+          # "is_versioning_enabled": True,
           # TODO: unsupport
           # "change_feed": {
           #   "enabled": True
           # }
         }
-        result = self.mgmt_client.blob_services.set_service_properties(resource_group.name, STORAGE_ACCOUNT_NAME_2, BODY)
+        result = self.mgmt_client.blob_services.set_service_properties(resource_group.name, STORAGE_ACCOUNT_NAME, BODY)
 
         # TODO: don't have encryption scopes
         # # StorageAccountPutEncryptionScope[put]
@@ -448,22 +447,32 @@ class MgmtStorageTest(AzureMgmtTestCase):
         result = self.mgmt_client.blob_containers.create(resource_group.name, STORAGE_ACCOUNT_NAME, CONTAINER_NAME)
 
         # CreateOrUpdateImmutabilityPolicy[put]
-        # BODY = {
-        #   "properties": {
-        #     "immutability_period_since_creation_in_days": "3",
-        #     "allow_protected_append_writes": True
-        #   }
-        # }
-        DAYS = 3
-        result = self.mgmt_client.blob_containers.create_or_update_immutability_policy(resource_group.name, STORAGE_ACCOUNT_NAME, CONTAINER_NAME, DAYS)
+        BODY = {
+          "immutability_period_since_creation_in_days": "3",
+          "allow_protected_append_writes": True
+        }
+        result = self.mgmt_client.blob_containers.create_or_update_immutability_policy(
+          resource_group.name,
+          STORAGE_ACCOUNT_NAME,
+          CONTAINER_NAME,
+          immutability_period_since_creation_in_days=BODY["immutability_period_since_creation_in_days"],
+          allow_protected_append_writes=BODY["allow_protected_append_writes"])
         ETAG = result.etag
 
         # DeleteImmutabilityPolicy[delete]
         result = self.mgmt_client.blob_containers.delete_immutability_policy(resource_group.name, STORAGE_ACCOUNT_NAME, CONTAINER_NAME, ETAG)
 
         # CreateOrUpdateImmutabilityPolicy[put] again
-        DAYS = 3
-        result = self.mgmt_client.blob_containers.create_or_update_immutability_policy(resource_group.name, STORAGE_ACCOUNT_NAME, CONTAINER_NAME, DAYS)
+        BODY = {
+          "immutability_period_since_creation_in_days": "3",
+          "allow_protected_append_writes": True
+        }
+        result = self.mgmt_client.blob_containers.create_or_update_immutability_policy(
+          resource_group.name,
+          STORAGE_ACCOUNT_NAME,
+          CONTAINER_NAME,
+          immutability_period_since_creation_in_days=BODY["immutability_period_since_creation_in_days"],
+          allow_protected_append_writes=BODY["allow_protected_append_writes"])
         ETAG = result.etag
 
         # GetImmutabilityPolicy[get]
@@ -707,7 +716,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
         result = self.mgmt_client.storage_accounts.update(resource_group.name, STORAGE_ACCOUNT_NAME, BODY)
 
         # StorageAccountFailover
-        result = self.mgmt_client.storage_accounts.failover(resource_group.name, STORAGE_ACCOUNT_NAME)
+        result = self.mgmt_client.storage_accounts.begin_failover(resource_group.name, STORAGE_ACCOUNT_NAME)
         result = result.result()
 
         # LockImmutabilityPolicy[post]

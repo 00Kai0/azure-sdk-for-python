@@ -17,7 +17,7 @@
 # ----------------------
 
 # covered ops:
-#   configuration_stores: 7/9
+#   configuration_stores: 8/9
 #   operations: 2/2
 #   private_endpoint_connections: 4/4
 #   private_link_resources: 2/2
@@ -189,23 +189,22 @@ class MgmtAppConfigurationTest(AzureMgmtTestCase):
         # ConfigurationStores_List[get]
         result = self.mgmt_client.configuration_stores.list()
 
-        # TODO: fix later
-        # ConfigurationStores_RegenerateKey[post]
-        # BODY = {
-        #   "id": "439AD01B4BE67DB1"
-        # }
-        # result = self.mgmt_client.configuration_stores.regenerate_key(resource_group.name, CONFIGURATION_STORE_NAME, BODY["id"])
+        # ConfigurationStores_ListKeys[post]
+        keys = list(self.mgmt_client.configuration_stores.list_keys(resource_group.name, CONFIGURATION_STORE_NAME))
 
-        # TODO: fix later
+        # ConfigurationStores_RegenerateKey[post]
+        BODY = {
+          "id": keys[0].id
+        }
+        result = self.mgmt_client.configuration_stores.regenerate_key(resource_group.name, CONFIGURATION_STORE_NAME, BODY["id"])
+
+        # TODO: azure.core.exceptions.HttpResponseError: (InternalServerError) Cannot serve the request. Please retry.
         # ConfigurationStores_ListKeyValue[post]
         # BODY = {
         #   "key": "MaxRequests",
         #   "label": "dev"
         # }
         # result = self.mgmt_client.configuration_stores.list_key_value(resource_group.name, CONFIGURATION_STORE_NAME, BODY["key"], BODY["label"])
-
-        # ConfigurationStores_ListKeys[post]
-        result = self.mgmt_client.configuration_stores.list_keys(resource_group.name, CONFIGURATION_STORE_NAME)
 
         # ConfigurationStores_Update[patch]
         BODY = {
