@@ -19,12 +19,12 @@
 # current methods coverage: 42
 #   blob_containers: 13/13
 #   blob_services:  3/3
-#   encryption_scopes:  0/4
+#   encryption_scopes:  4/4
 #   file_services: 3/3
 #   file_shares:  5/5
 #   management_policies:  3/3
 #   operations:  1/1
-#   private_endpoint_connections:  0/3
+#   private_endpoint_connections:  3/3
 #   private_link_resources:  1/1
 #   skus:  1/1
 #   storage_accounts:  11/14
@@ -34,7 +34,7 @@ import datetime as dt
 import unittest
 
 import azure.mgmt.storage.v2019_06_01
-# import azure.mgmt.network
+import azure.mgmt.network
 from devtools_testutils import AzureMgmtTestCase, ResourceGroupPreparer
 
 AZURE_LOCATION = 'westeurope'
@@ -59,17 +59,65 @@ class MgmtStorageTest(AzureMgmtTestCase):
         self.mgmt_client = self.create_mgmt_client(
             azure.mgmt.storage.v2019_06_01.StorageManagementClient
         )
-        # self.network_client = self.create_mgmt_client(
-        #   azure.mgmt.network.NetworkManagementClient
-        # )
-    
+        self.network_client = self.create_mgmt_client(
+          azure.mgmt.network.NetworkManagementClient
+        )
+
+    # TODO: update to track 2 version later
+    def create_endpoint(self, group_name, location, vnet_name, sub_net, endpoint_name, resource_id):
+        # Create VNet
+        async_vnet_creation = self.network_client.virtual_networks.create_or_update(
+            group_name,
+            vnet_name,
+            {
+                'location': location,
+                'address_space': {
+                    'address_prefixes': ['10.0.0.0/16']
+                }
+            }
+        )
+        async_vnet_creation.result()
+
+        # Create Subnet
+        async_subnet_creation = self.network_client.subnets.create_or_update(
+            group_name,
+            vnet_name,
+            sub_net,
+            {
+              'address_prefix': '10.0.0.0/24',
+               'private_link_service_network_policies': 'disabled',
+               'private_endpoint_network_policies': 'disabled'
+            }
+        )
+        subnet_info = async_subnet_creation.result()
+
+        # Create private endpoint
+        BODY = {
+          "location": location,
+          "properties": {
+            "privateLinkServiceConnections": [
+              {
+                "name": "myconnection",
+                # "private_link_service_id": "/subscriptions/" + self.settings.SUBSCRIPTION_ID + "/resourceGroups/" + group_name + "/providers/Microsoft.Storage/storageAccounts/" + STORAGE_ACCOUNT_NAME + ""
+                "private_link_service_id": resource_id,
+                "group_ids": ["blob"]
+              }
+            ],
+            "subnet": {
+              "id": "/subscriptions/" + self.settings.SUBSCRIPTION_ID + "/resourceGroups/" + group_name + "/providers/Microsoft.Network/virtualNetworks/" + vnet_name + "/subnets/" + sub_net
+            }
+          }
+        }
+        result = self.network_client.private_endpoints.create_or_update(group_name, endpoint_name, BODY)
+
+        return result.result()
+
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_storage(self, resource_group):
 
-        SERVICE_NAME = "myapimrndxyz"
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
         RESOURCE_GROUP = resource_group.name
-        STORAGE_ACCOUNT_NAME = "storageaccountxxyyzz"
+        STORAGE_ACCOUNT_NAME = "storageaccountxxyyzza"
         FILE_SERVICE_NAME = "fileservicexxyyzz"
         SHARE_NAME = "filesharenamexxyyzz"
         BLOB_SERVICE_NAME = "blobservicexxyyzz"
@@ -82,6 +130,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
         FIPCONFIG = "fipconfig123"
         BAPOOL = "bapool123"
         PROBES = "probe123"
+        PRIVATE_ENDPOINT = "endpoint123xxx"
         PRIVATE_ENDPOINT_CONNECTION_NAME = "privateEndpointConnection"
 
         """ TODO: set up for endpoint
@@ -235,7 +284,16 @@ class MgmtStorageTest(AzureMgmtTestCase):
           }
         }
         result = self.mgmt_client.storage_accounts.begin_create(resource_group.name, STORAGE_ACCOUNT_NAME, BODY)
-        result = result.result()
+        storageaccount = result.result()
+
+        self.create_endpoint(
+          resource_group.name,
+          AZURE_LOCATION,
+          VNET_NAME,
+          SUB_NET,
+          PRIVATE_ENDPOINT,
+          storageaccount.id
+        )
 
         # PutFileServices[put]
         BODY = {
@@ -381,8 +439,11 @@ class MgmtStorageTest(AzureMgmtTestCase):
 
         # TODO: don't have encryption scopes
         # # StorageAccountPutEncryptionScope[put]
-        # BODY = {}
-        # result = self.mgmt_client.encryption_scopes.put(resource_group.name, STORAGE_ACCOUNT_NAME, ENCRYPTION_SCOPE_NAME, BODY)
+        BODY = {
+          "source": "Microsoft.Storage",
+          "state": "Enabled"
+        }
+        result = self.mgmt_client.encryption_scopes.put(resource_group.name, STORAGE_ACCOUNT_NAME, ENCRYPTION_SCOPE_NAME, BODY)
 
         MANAGEMENT_POLICY_NAME = "managementPolicy"
         # StorageAccountSetManagementPolicies[put]
@@ -428,20 +489,23 @@ class MgmtStorageTest(AzureMgmtTestCase):
         # PutShares[put]
         result = self.mgmt_client.file_shares.create(resource_group.name, STORAGE_ACCOUNT_NAME, SHARE_NAME)
 
-        """TODO: not found
+        # StorageAccountGetProperties[get]
+        storageaccount = self.mgmt_client.storage_accounts.get_properties(resource_group.name, STORAGE_ACCOUNT_NAME)
+
+        # TODO: not found
         # PRIVATE_ENDPOINT_CONNECTION_NAME = "privateEndpointConnection"
+        PRIVATE_ENDPOINT_CONNECTION_NAME = storageaccount.private_endpoint_connections[0].name
         # StorageAccountPutPrivateEndpointConnection[put]
         BODY = {
-          # "private_endpoint": {
-          #   "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/privateEndpoints/" + PRIVATE_ENDPOINT
-          # },
+          "private_endpoint": {
+            "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/privateEndpoints/" + PRIVATE_ENDPOINT
+          },
           "private_link_service_connection_state": {
             "status": "Approved",
             "description": "Auto-Approved"
           }
         }
         result = self.mgmt_client.private_endpoint_connections.put(resource_group.name, STORAGE_ACCOUNT_NAME, PRIVATE_ENDPOINT_CONNECTION_NAME, BODY)
-        """
 
         # PutContainers[put]
         result = self.mgmt_client.blob_containers.create(resource_group.name, STORAGE_ACCOUNT_NAME, CONTAINER_NAME)
@@ -482,7 +546,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
         result = self.mgmt_client.blob_containers.get(resource_group.name, STORAGE_ACCOUNT_NAME, CONTAINER_NAME)
 
         # # StorageAccountGetPrivateEndpointConnection[get]
-        # result = self.mgmt_client.private_endpoint_connections.get(resource_group.name, STORAGE_ACCOUNT_NAME, PRIVATE_ENDPOINT_CONNECTION_NAME)
+        result = self.mgmt_client.private_endpoint_connections.get(resource_group.name, STORAGE_ACCOUNT_NAME, PRIVATE_ENDPOINT_CONNECTION_NAME)
 
         # GetShares[get]
         result = self.mgmt_client.file_shares.get(resource_group.name, STORAGE_ACCOUNT_NAME, SHARE_NAME)
@@ -495,7 +559,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
 
         # TODO: don't have encryption scopes
         # # StorageAccountGetEncryptionScope[get]
-        # result = self.mgmt_client.encryption_scopes.get(resource_group.name, STORAGE_ACCOUNT_NAME, ENCRYPTION_SCOPE_NAME)
+        result = self.mgmt_client.encryption_scopes.get(resource_group.name, STORAGE_ACCOUNT_NAME, ENCRYPTION_SCOPE_NAME)
 
         # ListShares[get]
         result = self.mgmt_client.file_shares.list(resource_group.name, STORAGE_ACCOUNT_NAME)
@@ -511,7 +575,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
 
         # TODO: don't have encryption scopes
         # # StorageAccountEncryptionScopeList[get]
-        # result = self.mgmt_client.encryption_scopes.list(resource_group.name, STORAGE_ACCOUNT_NAME)
+        result = self.mgmt_client.encryption_scopes.list(resource_group.name, STORAGE_ACCOUNT_NAME)
 
         # ListBlobServices[get]
         result = self.mgmt_client.blob_services.list(resource_group.name, STORAGE_ACCOUNT_NAME)
@@ -537,8 +601,6 @@ class MgmtStorageTest(AzureMgmtTestCase):
 
         # OperationsList[get]
         result = self.mgmt_client.operations.list()
-
-       
 
         # SetLegalHoldContainers[post]
         BODY = {
@@ -602,7 +664,11 @@ class MgmtStorageTest(AzureMgmtTestCase):
         #     "key_uri": "https://testvault.vault.core.windows.net/keys/key1/863425f1358359c"
         #   }
         # }
-        # result = self.mgmt_client.encryption_scopes.patch(resource_group.name, STORAGE_ACCOUNT_NAME, ENCRYPTION_SCOPE_NAME, BODY)
+        BODY = {
+          "source": "Microsoft.Storage",
+          "state": "Enabled"
+        }
+        result = self.mgmt_client.encryption_scopes.patch(resource_group.name, STORAGE_ACCOUNT_NAME, ENCRYPTION_SCOPE_NAME, BODY)
 
         # StorageAccountRevokeUserDelegationKeys[post]
         result = self.mgmt_client.storage_accounts.revoke_user_delegation_keys(resource_group.name, STORAGE_ACCOUNT_NAME)
@@ -745,7 +811,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
         result = self.mgmt_client.blob_containers.delete(resource_group.name, STORAGE_ACCOUNT_NAME, CONTAINER_NAME)
 
         # # StorageAccountDeletePrivateEndpointConnection[delete]
-        # result = self.mgmt_client.private_endpoint_connections.delete(resource_group.name, STORAGE_ACCOUNT_NAME, PRIVATE_ENDPOINT_CONNECTION_NAME)
+        result = self.mgmt_client.private_endpoint_connections.delete(resource_group.name, STORAGE_ACCOUNT_NAME, PRIVATE_ENDPOINT_CONNECTION_NAME)
 
         # DeleteShares[delete]
         result = self.mgmt_client.file_shares.delete(resource_group.name, STORAGE_ACCOUNT_NAME, SHARE_NAME)
