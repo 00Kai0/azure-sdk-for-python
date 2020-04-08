@@ -16,7 +16,7 @@
 # Coverage %      : 100
 # ----------------------
 
-# current methods coverage: 42
+# current methods coverage:
 #   blob_containers: 13/13
 #   blob_services:  3/3
 #   encryption_scopes:  4/4
