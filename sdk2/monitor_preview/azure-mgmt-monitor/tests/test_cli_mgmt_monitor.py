@@ -25,8 +25,8 @@
 #   alert_rule_incidents: 0/2
 #   alert_rules: 0/6
 #   baseline: 0/1
-#   diagnostic_settings: 0/4
-#   diagnostic_settings_category: 0/2
+#   diagnostic_settings: 4/4
+#   diagnostic_settings_category: 2/2
 #   guest_diagnostics_settings: 0/6  TODO: InvalidResourceType
 #   guest_diagnostics_settings_association: 0/6  TODO: InvalidResourceType
 #   event_categories: 1/1
@@ -67,6 +67,7 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
         super(MgmtMonitorClientTest, self).setUp()
         self.mgmt_client = self.create_mgmt_client(
             azure.mgmt.monitor.MonitorClient
+            # azure.mgmt.monitor.MonitorManagementClient
         )
         self.storage_client = self.create_mgmt_client(
             azure.mgmt.storage.StorageManagementClient
@@ -436,8 +437,6 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
 
         return vmss
 
-
-    # @unittest.skip("400")
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_monitor_diagnostic_settings(self, resource_group):
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
@@ -458,7 +457,6 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
 
         RESOURCE_URI = workflow.id
 
-        # TODO: return 400, but it doesn't have error message
         # Creates or Updates the diagnostic setting[put]
         BODY = {
           "storage_account_id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Storage/storageAccounts/" + STORAGE_ACCOUNT_NAME + "",
@@ -478,16 +476,16 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
             # }
           ],
           "logs": [
-            # {
-            #   "category": "WorkflowRuntime",
-            #   "enabled": True,
-            #   "retention_policy": {
-            #     "enabled": False,
-            #     "days": "0"
-            #   }
-            # }
+            {
+              "category": "WorkflowRuntime",
+              "enabled": True,
+              "retention_policy": {
+                "enabled": False,
+                "days": "0"
+              }
+            }
           ],
-          "log_analytics_destination_type": "Dedicated"
+          # "log_analytics_destination_type": "Dedicated"
         }
         diagnostic_settings = self.mgmt_client.diagnostic_settings.create_or_update(RESOURCE_URI, INSIGHT_NAME, BODY)
 
@@ -498,17 +496,17 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
             workflow=WORKFLOW_NAME
         )
 
+        # List diagnostic settings categories
+        categories = self.mgmt_client.diagnostic_settings_category.list(RESOURCE_URI) 
+
+        # List diagnostic settings[get]
+        result = self.mgmt_client.diagnostic_settings.list(RESOURCE_URI)
+
         # Gets the diagnostic setting[get]
         result = self.mgmt_client.diagnostic_settings.get(RESOURCE_URI, INSIGHT_NAME)
 
         # Get diagnostic settings category
-        self.mgmt_client.diagnostic_settings_category.get(RESOURCE_URI, INSIGHT_NAME) 
-
-        # List diagnostic settings categories
-        self.mgmt_client.diagnostic_settings_category.list(RESOURCE_URI) 
-
-        # List diagnostic settings[get]
-        result = self.mgmt_client.diagnostic_settings.list(RESOURCE_URI)
+        self.mgmt_client.diagnostic_settings_category.get(RESOURCE_URI, categories.value[0].name) 
 
         # Deletes the diagnostic setting[delete]
         result = self.mgmt_client.diagnostic_settings.delete(RESOURCE_URI, INSIGHT_NAME)
@@ -572,7 +570,7 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
         # Delete log profile[delete]
         result = self.mgmt_client.log_profiles.delete(LOGPROFILE_NAME)
 
-    @unittest.skip("model serialize error.")
+    @unittest.skip("cannot create or modify classic metric alerts")
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_alert_rule(self, resource_group):
 
@@ -593,7 +591,7 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
         # I need a subclass of "RuleDataSource"
         data_source = azure.mgmt.monitor.models.RuleMetricDataSource(
             resource_uri=resource_id,
-            metric_name='Percentage CPU'
+            metric_name='CPU Credits Consumed'
         )
 
         # I need a subclasses of "RuleCondition"
@@ -613,6 +611,7 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
             ]
         )
 
+        # TODO: You cannot create or modify classic metric alerts for this subscription as this subscription 92f95d8f-3c67-4124-91c7-8cf07cdbf241 is being migrated or has been migrated to use new metric alerts. Learn more - aka.ms/alertclassicretirement
         my_alert = self.mgmt_client.alert_rules.create_or_update(
             resource_group.name,
             rule_name,
@@ -621,59 +620,24 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
                 'name_properties_name': rule_name,
                 'description': 'Testing Alert rule creation',
                 'is_enabled': True,
-                'condition': {
-                    'data_source': {
-                        'odata_type': 'Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource',
-                        'resource_uri': resource_id,
-                        'metric_name': 'Percentage CPU'
-                    },
-                    'operator': 'GreaterThanOrEqual',
-                    'threshold': 90,
-                    'window_size': 'PT5M',
-                    'time_aggregation': 'Average'
-                },
+                'condition': rule_condition,
                 'actions': [
-                    {
-                        'send_to_service_owners': True,
-                        'custom_emails': [
-                            "monitoringemail@microsoft.com"
-                        ],
-                        'odata_type': 'Microsoft.Azure.Management.Insights.Models.RuleEmailAction'
-                    }
+                    # rule_action
                 ]
             }
         )
-
-        # TODO: something wrong when generate model
-        # Create or update an alert rule[put]
-        # BODY = {
-        #   "location": AZURE_LOCATION,
-        #   "name": "chiricutin",
-        #   "description": "Pura Vida",
-        #   "is_enabled": True,
-        #   "condition": {
-        #     "odata.type": "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition",
-        #     # "data_source": {
-        #     #   "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-        #     #   # "resource_uri": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Web/sites/" + SITE_NAME + "",
-        #     #   # "resource_uri": site.id,
-        #     #   "metric_name": "Requests"
-        #     # },
-        #     "operator": "GreaterThan",
-        #     "threshold": "3",
-        #     "window_size": "PT5M",
-        #     "time_aggregation": "Total"
-        #   },
-        #   # "last_updated_time": "2016-11-23T21:23:52.0221265Z",
-        #   "actions": []
-        # }
-        # result = self.mgmt_client.alert_rules.create_or_update(resource_group.name, ALERTRULE_NAME, BODY)
 
         # Get an alert rule[get]
         result = self.mgmt_client.alert_rules.get(resource_group.name, ALERTRULE_NAME)
 
         # List alert rules[get]
         result = self.mgmt_client.alert_rules.list_by_resource_group(resource_group.name)
+
+        # List alert rule incidents
+        incidents = self.mgmt_client.alert_rule_incidents.list_by_alert_rule(resource_group.name, ALERTRULE_NAME)
+
+        # Get alert rule incident
+        result = self.mgmt_client.alert_rule_incidents.get(resource_group.name, ALERTRULE_NAME, incidents.value[0].name)
 
         # List alert rules[get]
         result = self.mgmt_client.alert_rules.list_by_subscription(resource_group.name)
