@@ -24,7 +24,6 @@ try:
     from ._models_py3 import MetricDefinition
     from ._models_py3 import MetricDefinitionCollection
     from ._models_py3 import Resource
-    from ._models_py3 import Resource
     from ._models_py3 import RetentionPolicy
     from ._models_py3 import RuleAction
     from ._models_py3 import RuleCondition
@@ -53,7 +52,6 @@ except (SyntaxError, ImportError):
     from ._models import MetricDefinition  # type: ignore
     from ._models import MetricDefinitionCollection  # type: ignore
     from ._models import Resource  # type: ignore
-    from ._models import Resource  # type: ignore
     from ._models import RetentionPolicy  # type: ignore
     from ._models import RuleAction  # type: ignore
     from ._models import RuleCondition  # type: ignore
@@ -65,7 +63,7 @@ except (SyntaxError, ImportError):
     from ._models import RuleWebhookAction  # type: ignore
     from ._models import ThresholdRuleCondition  # type: ignore
 
-from ._monitor_client_enums import (
+from ._monitor_management_client_enums import (
     AggregationType,
     ConditionOperator,
     TimeAggregationOperator,
@@ -89,7 +87,6 @@ __all__ = [
     'MetricAvailability',
     'MetricDefinition',
     'MetricDefinitionCollection',
-    'Resource',
     'Resource',
     'RetentionPolicy',
     'RuleAction',

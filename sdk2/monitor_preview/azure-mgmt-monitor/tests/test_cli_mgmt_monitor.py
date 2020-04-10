@@ -66,8 +66,7 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
     def setUp(self):
         super(MgmtMonitorClientTest, self).setUp()
         self.mgmt_client = self.create_mgmt_client(
-            azure.mgmt.monitor.MonitorClient
-            # azure.mgmt.monitor.MonitorManagementClient
+            azure.mgmt.monitor.MonitorManagementClient
         )
         self.storage_client = self.create_mgmt_client(
             azure.mgmt.storage.StorageManagementClient
@@ -549,23 +548,21 @@ class MgmtMonitorClientTest(AzureMgmtTestCase):
 
         # TODO: azure.core.exceptions.HttpResponseError: (Method not allowed) Exception of type 'Microsoft.WindowsAzure.Management.Monitoring.MonitoringServiceException' was thrown.
         # Update a log profile[patch]
-        BODY = {
-          "location": "",
-          "locations": [
-            "global"
-          ],
-          "categories": [
-            "Write",
-            "Delete",
-            "Action"
-          ],
-          "retention_policy": {
-            "enabled": True,
-            "days": "3"
-          },
-          "storage_account_id": storage_account_id
-        }
-        result = self.mgmt_client.log_profiles.update(LOGPROFILE_NAME, BODY)
+        # BODY = {
+        #   "locations": [
+        #     "global"
+        #   ],
+        #   "categories": [
+        #     "Write",
+        #     "Delete",
+        #     "Action"
+        #   ],
+        #   "retention_policy": {
+        #     "enabled": True,
+        #     "days": "3"
+        #   }
+        # }
+        # result = self.mgmt_client.log_profiles.update(LOGPROFILE_NAME, BODY)
 
         # Delete log profile[delete]
         result = self.mgmt_client.log_profiles.delete(LOGPROFILE_NAME)

@@ -34,7 +34,6 @@ try:
     from ._models_py3 import MetricDimension
     from ._models_py3 import MultiMetricCriteria
     from ._models_py3 import Resource
-    from ._models_py3 import Resource
     from ._models_py3 import SmsReceiver
     from ._models_py3 import VoiceReceiver
     from ._models_py3 import WebhookReceiver
@@ -67,13 +66,12 @@ except (SyntaxError, ImportError):
     from ._models import MetricDimension  # type: ignore
     from ._models import MultiMetricCriteria  # type: ignore
     from ._models import Resource  # type: ignore
-    from ._models import Resource  # type: ignore
     from ._models import SmsReceiver  # type: ignore
     from ._models import VoiceReceiver  # type: ignore
     from ._models import WebhookReceiver  # type: ignore
     from ._models import WebtestLocationAvailabilityCriteria  # type: ignore
 
-from ._monitor_client_enums import (
+from ._monitor_management_client_enums import (
     AggregationType,
     CriterionType,
     DynamicThresholdOperator,
@@ -110,7 +108,6 @@ __all__ = [
     'MetricCriteria',
     'MetricDimension',
     'MultiMetricCriteria',
-    'Resource',
     'Resource',
     'SmsReceiver',
     'VoiceReceiver',

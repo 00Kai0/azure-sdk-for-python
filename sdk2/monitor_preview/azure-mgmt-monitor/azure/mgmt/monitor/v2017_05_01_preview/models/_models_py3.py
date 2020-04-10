@@ -109,41 +109,6 @@ class DiagnosticSettingsCategoryResourceCollection(msrest.serialization.Model):
         self.value = value
 
 
-# class ProxyOnlyResource(msrest.serialization.Model):
-#     """A proxy only azure resource object.
-
-#     Variables are only populated by the server, and will be ignored when sending a request.
-
-#     :ivar id: Azure resource Id.
-#     :vartype id: str
-#     :ivar name: Azure resource name.
-#     :vartype name: str
-#     :ivar type: Azure resource type.
-#     :vartype type: str
-#     """
-
-#     _validation = {
-#         'id': {'readonly': True},
-#         'name': {'readonly': True},
-#         'type': {'readonly': True},
-#     }
-
-#     _attribute_map = {
-#         'id': {'key': 'id', 'type': 'str'},
-#         'name': {'key': 'name', 'type': 'str'},
-#         'type': {'key': 'type', 'type': 'str'},
-#     }
-
-#     def __init__(
-#         self,
-#         **kwargs
-#     ):
-#         super(ProxyOnlyResource, self).__init__(**kwargs)
-#         self.id = None
-#         self.name = None
-#         self.type = None
-
-
 class DiagnosticSettingsResource(ProxyOnlyResource):
     """The diagnostic setting resource.
 

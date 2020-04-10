@@ -21,7 +21,6 @@ try:
     from ._models_py3 import GuestDiagnosticSettingsResource
     from ._models_py3 import PerformanceCounterConfiguration
     from ._models_py3 import Resource
-    from ._models_py3 import Resource
     from ._models_py3 import SinkConfiguration
 except (SyntaxError, ImportError):
     from ._models import DataSource  # type: ignore
@@ -38,10 +37,9 @@ except (SyntaxError, ImportError):
     from ._models import GuestDiagnosticSettingsResource  # type: ignore
     from ._models import PerformanceCounterConfiguration  # type: ignore
     from ._models import Resource  # type: ignore
-    from ._models import Resource  # type: ignore
     from ._models import SinkConfiguration  # type: ignore
 
-from ._monitor_client_enums import (
+from ._monitor_management_client_enums import (
     DataSourceKind,
     GuestDiagnosticSettingsOsType,
     SinkConfigurationKind,
@@ -61,7 +59,6 @@ __all__ = [
     'GuestDiagnosticSettingsPatchResource',
     'GuestDiagnosticSettingsResource',
     'PerformanceCounterConfiguration',
-    'Resource',
     'Resource',
     'SinkConfiguration',
     'DataSourceKind',

@@ -13,8 +13,8 @@ from azure.core.pipeline import policies
 
 VERSION = "unknown"
 
-class MonitorClientConfiguration(Configuration):
-    """Configuration for MonitorClient.
+class MonitorManagementClientConfiguration(Configuration):
+    """Configuration for MonitorManagementClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
@@ -31,7 +31,7 @@ class MonitorClientConfiguration(Configuration):
         # type: (...) -> None
         if credential is None:
             raise ValueError("Parameter 'credential' must not be None.")
-        super(MonitorClientConfiguration, self).__init__(**kwargs)
+        super(MonitorManagementClientConfiguration, self).__init__(**kwargs)
 
         self.credential = credential
         self.api_version = "2017-05-01-preview"

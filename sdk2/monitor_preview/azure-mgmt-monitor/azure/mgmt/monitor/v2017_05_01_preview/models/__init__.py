@@ -22,7 +22,6 @@ try:
     from ._models_py3 import MetricSettings
     from ._models_py3 import MetricValue
     from ._models_py3 import ProxyOnlyResource
-    from ._models_py3 import ProxyOnlyResource
     from ._models_py3 import Response
     from ._models_py3 import RetentionPolicy
     from ._models_py3 import TimeSeriesElement
@@ -42,12 +41,11 @@ except (SyntaxError, ImportError):
     from ._models import MetricSettings  # type: ignore
     from ._models import MetricValue  # type: ignore
     from ._models import ProxyOnlyResource  # type: ignore
-    from ._models import ProxyOnlyResource  # type: ignore
     from ._models import Response  # type: ignore
     from ._models import RetentionPolicy  # type: ignore
     from ._models import TimeSeriesElement  # type: ignore
 
-from ._monitor_client_enums import (
+from ._monitor_management_client_enums import (
     AggregationType,
     CategoryType,
     ResultType,
@@ -69,7 +67,6 @@ __all__ = [
     'MetricDefinitionCollection',
     'MetricSettings',
     'MetricValue',
-    'ProxyOnlyResource',
     'ProxyOnlyResource',
     'Response',
     'RetentionPolicy',

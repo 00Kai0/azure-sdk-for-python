@@ -2,8 +2,8 @@
     "chosen_version": "2017-11-01-preview",
     "total_api_version_list": ["2017-11-01-preview"],
     "client": {
-        "name": "MonitorClient",
-        "filename": "_monitor_client",
+        "name": "MonitorManagementClient",
+        "filename": "_monitor_management_client",
         "description": "Monitor Management Client.",
         "has_subscription_id": false
     },

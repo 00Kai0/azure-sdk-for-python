@@ -24,7 +24,6 @@ try:
     from ._models_py3 import ErrorResponse
     from ._models_py3 import ItsmReceiver
     from ._models_py3 import Resource
-    from ._models_py3 import Resource
     from ._models_py3 import SmsReceiver
     from ._models_py3 import WebhookReceiver
 except (SyntaxError, ImportError):
@@ -45,11 +44,10 @@ except (SyntaxError, ImportError):
     from ._models import ErrorResponse  # type: ignore
     from ._models import ItsmReceiver  # type: ignore
     from ._models import Resource  # type: ignore
-    from ._models import Resource  # type: ignore
     from ._models import SmsReceiver  # type: ignore
     from ._models import WebhookReceiver  # type: ignore
 
-from ._monitor_client_enums import (
+from ._monitor_management_client_enums import (
     ReceiverStatus,
 )
 
@@ -70,7 +68,6 @@ __all__ = [
     'EnableRequest',
     'ErrorResponse',
     'ItsmReceiver',
-    'Resource',
     'Resource',
     'SmsReceiver',
     'WebhookReceiver',

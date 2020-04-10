@@ -6,5 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._monitor_client_async import MonitorClient
-__all__ = ['MonitorClient']
+from ._monitor_management_client_async import MonitorManagementClient
+__all__ = ['MonitorManagementClient']

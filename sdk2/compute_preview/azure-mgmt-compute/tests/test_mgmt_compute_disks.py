@@ -15,9 +15,93 @@
 import unittest
 
 import azure.mgmt.compute
+from azure.profiles import ProfileDefinition
 from devtools_testutils import AzureMgmtTestCase, ResourceGroupPreparer
 
 AZURE_LOCATION = 'eastus'
+
+class MgmtComputeTestMultiVersion(AzureMgmtTestCase):
+
+    def setUp(self):
+        super(MgmtComputeTestMultiVersion, self).setUp()
+        self.mgmt_client = self.create_mgmt_client(
+            azure.mgmt.compute.ComputeManagementClient
+        )
+        self.mgmt_client.profile = ProfileDefinition({
+            self.mgmt_client._PROFILE_TAG: {
+                None: "2019-07-01",
+                'availability_sets': '2019-07-01',
+                'dedicated_host_groups': '2019-07-01',
+                'dedicated_hosts': '2019-07-01',
+                'disk_encryption_sets': '2019-11-01',
+                'disks': '2019-03-01',  # test old version
+                'images': '2019-07-01',
+                'log_analytics': '2019-07-01',
+                'operations': '2019-07-01',
+                'proximity_placement_groups': '2019-07-01',
+                'resource_skus': '2019-04-01',
+                'snapshots': '2019-11-01',
+                'usage': '2019-07-01',
+                'virtual_machine_extension_images': '2019-07-01',
+                'virtual_machine_extensions': '2019-07-01',
+                'virtual_machine_images': '2019-07-01',
+                'virtual_machine_run_commands': '2019-07-01',
+                'virtual_machine_scale_set_extensions': '2019-07-01',
+                'virtual_machine_scale_set_rolling_upgrades': '2019-07-01',
+                'virtual_machine_scale_set_vm_extensions': '2019-07-01',
+                'virtual_machine_scale_set_vms': '2019-07-01',
+                'virtual_machine_scale_sets': '2019-07-01',
+                'virtual_machine_sizes': '2019-07-01',
+                'virtual_machines': '2019-07-01',
+            }},
+            self.mgmt_client._PROFILE_TAG + " test"
+        )
+
+    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    def test_compute_disks(self, resource_group):
+
+        DISK_NAME = self.get_resource_name("disknamex")
+
+        # Create an empty managed disk.[put]
+        BODY = {
+          "location": "eastus",
+          "creation_data": {
+            "create_option": "Empty"
+          },
+          "disk_size_gb": "200"
+        }
+        result = self.mgmt_client.disks.begin_create_or_update(resource_group.name, DISK_NAME, BODY)
+        result = result.result()
+
+        # Get information about a managed disk.[get]
+        result = self.mgmt_client.disks.get(resource_group.name, DISK_NAME)
+
+        # List all managed disks in a resource group.[get]
+        result = self.mgmt_client.disks.list_by_resource_group(resource_group.name)
+
+        # List all managed disks in a subscription.[get]
+        result = self.mgmt_client.disks.list()
+
+        # Update disk.[patch]
+        BODY = {
+          "disk_size_gb": "200"
+        }
+        result = self.mgmt_client.disks.begin_update(resource_group.name, DISK_NAME, BODY)
+        result = result.result()
+
+        # Grant acess disk
+        ACCESS = "Read"
+        DURATION_IN_SECONDS = 1800
+        result = self.mgmt_client.disks.begin_grant_access(resource_group.name, DISK_NAME, ACCESS, DURATION_IN_SECONDS)
+        result = result.result()
+
+         # Revoke access disk
+        result = self.mgmt_client.disks.begin_revoke_access(resource_group.name, DISK_NAME)
+        result = result.result()
+
+        # Delete disk
+        result = self.mgmt_client.disks.begin_delete(resource_group.name, DISK_NAME)
+        result = result.result()
 
 class MgmtComputeTest(AzureMgmtTestCase):
 
@@ -29,9 +113,9 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # self.keyvault_client = self.create_mgmt_client(
         #     azure.mgmt.keyvault.KeyVaultManagementClient
         # )
-        self.network_client = self.create_mgmt_client(
-            azure.mgmt.network.NetworkManagementClient
-        )
+        # self.network_client = self.create_mgmt_client(
+        #     azure.mgmt.network.NetworkManagementClient
+        # )
 
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_compute_disk_encryption(self, resource_group):
@@ -91,6 +175,8 @@ class MgmtComputeTest(AzureMgmtTestCase):
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
         RESOURCE_GROUP = resource_group.name
         DISK_NAME = self.get_resource_name("disknamex")
+        SNAPSHOT_NAME = self.get_resource_name("snapshotx")
+        IMAGE_NAME = self.get_resource_name("imagex")
 
         # Create an empty managed disk.[put]
         BODY = {
@@ -127,7 +213,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
             },
             "zone_resilient": False
           },
-          "hyper_vgeneration": "V1"  # TODO: required
+          "hyper_v_generation": "V1"  # TODO: required
         }
         result = self.mgmt_client.images.begin_create_or_update(resource_group.name, IMAGE_NAME, BODY)
         result = result.result()
