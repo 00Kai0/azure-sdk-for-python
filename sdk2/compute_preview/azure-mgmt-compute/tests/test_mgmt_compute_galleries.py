@@ -33,9 +33,52 @@ class MgmtComputeTest(AzureMgmtTestCase):
             azure.mgmt.network.NetworkManagementClient
         )
 
+    def create_snapshot(self, group_name, disk_name, snapshot_name):
+        # Create an empty managed disk.[put]
+        BODY = {
+          "location": "eastus",
+          "creation_data": {
+            "create_option": "Empty"
+          },
+          "disk_size_gb": "200"
+        }
+        result = self.mgmt_client.disks.begin_create_or_update(group_name, disk_name, BODY)
+        disk = result.result()
+
+      # Create a snapshot by copying a disk.
+        BODY = {
+          "location": "eastus",
+          "creation_data": {
+            "create_option": "Copy",
+            # "source_uri": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Compute/disks/" + DISK_NAME
+            "source_uri": disk.id
+          }
+        }
+        result = self.mgmt_client.snapshots.begin_create_or_update(group_name, snapshot_name, BODY)
+        result = result.result()
+
+    def delete_snapshot(self, group_name, snapshot_name):
+
+        # Revoke access snapshot (TODO: need swagger file)
+        result = self.mgmt_client.snapshots.begin_revoke_access(group_name, snapshot_name)
+        result = result.result()
+
+        # Delete snapshot (TODO: need swagger file)
+        result = self.mgmt_client.snapshots.begin_delete(group_name, snapshot_name)
+        result = result.result()
+
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_compute_galleries(self, resource_group):
+        SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
+        RESOURCE_GROUP = resource_group.name
         GALLERY_NAME = self.get_resource_name("galleryname")
+        APPLICATION_NAME = self.get_resource_name("applicationname")
+        IMAGE_NAME = self.get_resource_name("imagex")
+        DISK_NAME = self.get_resource_name("diskname")
+        SNAPSHOT_NAME = self.get_resource_name("snapshotname")
+        VERSION_NAME = "1.0.0"
+
+        self.create_snapshot(RESOURCE_GROUP, DISK_NAME, SNAPSHOT_NAME)
 
         # Create or update a simple gallery.[put]
         BODY = {
@@ -250,6 +293,12 @@ class MgmtComputeTest(AzureMgmtTestCase):
         result = self.mgmt_client.gallery_image_versions.begin_delete(resource_group.name, GALLERY_NAME, IMAGE_NAME, VERSION_NAME)
         result = result.result()
 
+        # Delete a gallery Application.[delete]
+        result = self.mgmt_client.gallery_applications.begin_delete(resource_group.name, GALLERY_NAME, APPLICATION_NAME)
+        result = result.result()
+
+        self.delete_snapshot(RESOURCE_GROUP, SNAPSHOT_NAME)
+
         # Delete a gallery image.[delete]
         result = self.mgmt_client.gallery_images.begin_delete(resource_group.name, GALLERY_NAME, IMAGE_NAME)
         result = result.result()
@@ -258,10 +307,6 @@ class MgmtComputeTest(AzureMgmtTestCase):
         # # Delete a gallery Application Version.[delete]
         # result = self.mgmt_client.gallery_application_versions.delete(resource_group.name, GALLERY_NAME, APPLICATION_NAME, VERSION_NAME)
         # result = result.result()
-
-        # Delete a gallery Application.[delete]
-        result = self.mgmt_client.gallery_applications.begin_delete(resource_group.name, GALLERY_NAME, APPLICATION_NAME)
-        result = result.result()
 
         # Delete a gallery.[delete]
         result = self.mgmt_client.galleries.begin_delete(resource_group.name, GALLERY_NAME)

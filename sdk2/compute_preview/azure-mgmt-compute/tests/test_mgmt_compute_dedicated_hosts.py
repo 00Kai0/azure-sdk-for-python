@@ -43,6 +43,8 @@ class MgmtComputeTest(AzureMgmtTestCase):
 
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_dedicated_hosts(self, resource_group):
+        HOST_GROUP_NAME = self.get_resource_name("hostgroup")
+        HOST_NAME = self.get_resource_name("hostname")
 
         # Create or update a dedicated host group.[put]
         BODY = {
@@ -101,7 +103,8 @@ class MgmtComputeTest(AzureMgmtTestCase):
             "department": "HR"
           },
         }
-        result = self.mgmt_client.dedicated_hosts.update(resource_group.name, HOST_GROUP_NAME, HOST_NAME, BODY)
+        result = self.mgmt_client.dedicated_hosts.begin_update(resource_group.name, HOST_GROUP_NAME, HOST_NAME, BODY)
+        result = result.result()
 
         # Delete a dedicated host (TODO: need swagger file)
         result = self.mgmt_client.dedicated_hosts.begin_delete(resource_group.name, HOST_GROUP_NAME, HOST_NAME)
