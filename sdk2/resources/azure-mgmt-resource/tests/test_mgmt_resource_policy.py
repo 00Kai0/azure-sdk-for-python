@@ -7,9 +7,9 @@
 #--------------------------------------------------------------------------
 
 # covered ops:
-#   policy_definitions: 7/10  # TODO: (AuthorizationFailed) 
+#   policy_definitions: 10/10
 #   policy_assignments: 10/10
-#   policy_set_definitions: 7/10
+#   policy_set_definitions: 10/10
 
 import unittest
 
@@ -209,11 +209,12 @@ class MgmtResourcePolicyTest(AzureMgmtTestCase):
         result = self.mgmtgroup_client.management_groups.delete(group_id)
         result = result.result()
 
-    @unittest.skip("Forbidden")
+    # @unittest.skip("Forbidden")
     @ResourceGroupPreparer()
     def test_policy_definition(self, resource_group, location):
         policy_name = self.get_resource_name('pypolicy')
         policy_assignment_name = self.get_resource_name('pypolicyassignment')
+        policy_set_name = self.get_resource_name('pypolicy')
 
         definition = self.policy_client.policy_definitions.create_or_update(
             policy_name,
@@ -264,6 +265,27 @@ class MgmtResourcePolicyTest(AzureMgmtTestCase):
             }
         )
 
+        BODY = {
+            "properties": {
+                "displayName": "Cost Management",
+                "description": "Policies to enforce low cost storage SKUs",
+                "metadata": {
+                "category": "Cost Management"
+                },
+                "policyDefinitions": [
+                {
+                    "policyDefinitionId": definition.id,
+                    "parameters": {
+                    }
+                }
+                ]
+            }
+        }
+        self.policy_client.policy_set_definitions.create_or_update(
+            policy_set_name,
+            BODY
+        )
+
         assignment = self.policy_client.policy_assignments.get(
             assignment.scope,
             assignment.name
@@ -306,12 +328,20 @@ class MgmtResourcePolicyTest(AzureMgmtTestCase):
             }
         )
 
+        self.policy_client.policy_set_definitions.get(
+            policy_set_name
+        )
+
         assignment = self.policy_client.policy_assignments.get_by_id(
             assignment.id,
         )
 
         self.policy_client.policy_assignments.delete_by_id(
             assignment.id
+        )
+
+        self.policy_client.policy_set_definitions.delete(
+            policy_set_name
         )
 
         # Delete definitions

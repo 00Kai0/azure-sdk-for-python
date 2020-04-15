@@ -9,15 +9,11 @@
 # coverd ops:
 #   tags: 9/9
 #   resource_groups: 7/7
-#   resources: 12/14 TODO: ServiceResponseError
+#   resources: 14/14
 #   deployments: 34/43  TODO: tenant is forbidden
 #   deployment_operations: 8/10 TODO: tenant is forbidden
 #   providers: 6/6
 #   operations: 1/1
-
-"""TODO:
-azure.core.exceptions.HttpResponseError: (NoRegisteredProviderFound) No registered resource provider found for location 'westus' and API version '2019-10-01' for type 'availabilitySets'. The supported api-versions are '2015-05-01-preview, 2015-06-15, 2016-03-30, 2016-04-30-preview, 2016-08-30, 2017-03-30, 2017-12-01, 2018-04-01, 2018-06-01, 2018-10-01, 2019-03-01, 2019-07-01, 2019-12-01'. The supported locations are 'eastus, eastus2, westus, centralus, northcentralus, southcentralus, northeurope, westeurope, eastasia, southeastasia, japaneast, japanwest, australiaeast, australiasoutheast, australiacentral, brazilsouth, southindia, centralindia, westindia, canadacentral, canadaeast, westus2, westcentralus, uksouth, ukwest, koreacentral, koreasouth, francecentral, southafricanorth, uaenorth, switzerlandnorth, germanywestcentral, norwayeast'.
-"""
 
 
 import unittest
@@ -391,7 +387,7 @@ class MgmtResourceTest(AzureMgmtTestCase):
 
         # TODO:azure.core.exceptions.HttpResponseError: (AuthorizationFailed) 
         # Calculate teplate hash
-        # result = self.resource_client.deployments.calculate_template_hash(template)
+        result = self.resource_client.deployments.calculate_template_hash(template)
 
         # Create deployment
         deployment_create_result = self.resource_client.deployments.begin_create_or_update(
@@ -701,7 +697,6 @@ class MgmtResourceTest(AzureMgmtTestCase):
         # for more sample templates, see https://github.com/Azure/azure-quickstart-templates
         deployment_name = self.get_resource_name("pytestlinked")
 
-        """
         # Check deployment existence
         deployment_exists = self.resource_client.deployments.check_existence_at_subscription_scope(
             deployment_name
@@ -732,7 +727,7 @@ class MgmtResourceTest(AzureMgmtTestCase):
 
         # List deployments at subscription
         deployment_list_result = self.resource_client.deployments.list_at_subscription_scope(
-            None,
+            # None,
         )
         deployment_list_result = list(deployment_list_result)
         self.assertEqual(len(deployment_list_result), 1)
@@ -794,7 +789,6 @@ class MgmtResourceTest(AzureMgmtTestCase):
             deployment_name
         )
         self.assertTrue(hasattr(export, 'template'))
-        """
 
         # Delete the template
         async_delete = self.resource_client.deployments.begin_delete_at_subscription_scope(
@@ -802,7 +796,7 @@ class MgmtResourceTest(AzureMgmtTestCase):
         )
         async_delete.wait()
 
-    """TODO: FORBIDDEN
+    @unittest.skip("forbidden")
     def test_deployments_at_tenant(self):
 
         # for more sample templates, see https://github.com/Azure/azure-quickstart-templates
@@ -894,7 +888,6 @@ class MgmtResourceTest(AzureMgmtTestCase):
             deployment_name
         )
         async_delete.wait()
-    """
 
     def test_provider_locations(self):
         result_get = self.resource_client.providers.get('Microsoft.Web')
