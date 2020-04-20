@@ -11,9 +11,9 @@
 # ----------------------
 # Methods Total   : 14
 # Methods Covered : 14
-# Examples Total  : 14
-# Examples Tested : 14
-# Coverage %      : 100
+# Examples Total  : 15
+# Examples Tested : 13
+# Coverage %      : 87
 # ----------------------
 
 import unittest
@@ -34,9 +34,31 @@ class MgmtCognitiveServicesTest(AzureMgmtTestCase):
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_cognitiveservices(self, resource_group):
 
+<<<<<<< HEAD
         SERVICE_NAME = "myapimrndxyz"
 
         # Create Account[put]
+=======
+        SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
+        RESOURCE_GROUP = resource_group.name
+        ACCOUNT_NAME = "myAccount"
+        LOCATION = "myLocation"
+
+        # /Accounts/put/Create Account Min[put]
+        BODY = {
+          "location": "West US",
+          "kind": "CognitiveServices",
+          "sku": {
+            "name": "S0"
+          },
+          "identity": {
+            "type": "SystemAssigned"
+          }
+        }
+        result = self.mgmt_client.accounts.create(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME, account=BODY)
+
+        # /Accounts/put/Create Account[put]
+>>>>>>> origin/master
         BODY = {
           "location": "West US",
           "kind": "Emotion",
@@ -54,7 +76,11 @@ class MgmtCognitiveServicesTest(AzureMgmtTestCase):
             },
             "user_owned_storage": [
               {
+<<<<<<< HEAD
                 "resource_id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Storage/storageAccounts/" + STORAGE_ACCOUNT_NAME + ""
+=======
+                "resource_id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Storage/storageAccountsfelixwatest"
+>>>>>>> origin/master
               }
             ]
           },
@@ -62,6 +88,7 @@ class MgmtCognitiveServicesTest(AzureMgmtTestCase):
             "type": "SystemAssigned"
           }
         }
+<<<<<<< HEAD
         result = self.mgmt_client.accounts.create(resource_group.name, ACCOUNT_NAME, BODY)
 
         # Get Usages[get]
@@ -92,11 +119,44 @@ class MgmtCognitiveServicesTest(AzureMgmtTestCase):
         result = self.mgmt_client.accounts.list_keys(resource_group.name, ACCOUNT_NAME)
 
         # Update Account[patch]
+=======
+        # result = self.mgmt_client.accounts.create(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME, account=BODY)
+
+        # /Accounts/get/Get Usages[get]
+        result = self.mgmt_client.accounts.get_usages(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME)
+
+        # /Accounts/get/List SKUs[get]
+        result = self.mgmt_client.accounts.list_skus(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME)
+
+        # /Accounts/get/Get Account[get]
+        result = self.mgmt_client.accounts.get_properties(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME)
+
+        # /Accounts/get/List Accounts by Resource Group[get]
+        result = self.mgmt_client.accounts.list_by_resource_group(resource_group_name=RESOURCE_GROUP)
+
+        # /Accounts/get/List Accounts by Subscription[get]
+        result = self.mgmt_client.accounts.list()
+
+        # /ResourceSkus/get/Regenerate Keys[get]
+        result = self.mgmt_client.resource_skus.list()
+
+        # /Operations/get/Get Operations[get]
+        result = self.mgmt_client.operations.list()
+
+        # /Accounts/post/Regenerate Keys[post]
+        result = self.mgmt_client.accounts.regenerate_key(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME, key_name="Key2")
+
+        # /Accounts/post/List Keys[post]
+        result = self.mgmt_client.accounts.list_keys(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME)
+
+        # /Accounts/patch/Update Account[patch]
+>>>>>>> origin/master
         BODY = {
           "sku": {
             "name": "S2"
           }
         }
+<<<<<<< HEAD
         result = self.mgmt_client.accounts.update(resource_group.name, ACCOUNT_NAME, BODY)
 
         # Check SKU Availability[post]
@@ -121,6 +181,18 @@ class MgmtCognitiveServicesTest(AzureMgmtTestCase):
 
         # Delete Account[delete]
         result = self.mgmt_client.accounts.delete(resource_group.name, ACCOUNT_NAME)
+=======
+        # result = self.mgmt_client.accounts.update(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME, account=BODY)
+
+        # //post/Check SKU Availability[post]
+        SKUS = [
+            "S0"
+        ]
+        result = self.mgmt_client.check_sku_availability(location="eastus", skus=SKUS, kind="Face", type="Microsoft.CognitiveServices/accounts")
+
+        # /Accounts/delete/Delete Account[delete]
+        result = self.mgmt_client.accounts.delete(resource_group_name=RESOURCE_GROUP, account_name=ACCOUNT_NAME)
+>>>>>>> origin/master
 
 
 #------------------------------------------------------------------------------

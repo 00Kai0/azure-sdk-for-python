@@ -6,9 +6,8 @@ import logging
 import os
 from typing import TYPE_CHECKING
 
-from azure.core.exceptions import ClientAuthenticationError
-
-from ..._constants import EnvironmentVariables, KnownAuthorities
+from ..._constants import EnvironmentVariables
+from ..._internal import get_default_authority
 from .azure_cli import AzureCliCredential
 from .chained import ChainedTokenCredential
 from .environment import EnvironmentCredential
@@ -54,7 +53,7 @@ class DefaultAzureCredential(ChainedTokenCredential):
     """
 
     def __init__(self, **kwargs):
-        authority = kwargs.pop("authority", None) or KnownAuthorities.AZURE_PUBLIC_CLOUD
+        authority = kwargs.pop("authority", None) or get_default_authority()
 
         shared_cache_username = kwargs.pop("shared_cache_username", os.environ.get(EnvironmentVariables.AZURE_USERNAME))
         shared_cache_tenant_id = kwargs.pop(
@@ -91,18 +90,11 @@ class DefaultAzureCredential(ChainedTokenCredential):
 
         .. note:: This method is called by Azure SDK clients. It isn't intended for use in application code.
 
-        :param str scopes: desired scopes for the token
+        :param str scopes: desired scopes for the access token. This method requires at least one scope.
         :raises ~azure.core.exceptions.ClientAuthenticationError: authentication failed. The exception has a
           `message` attribute listing each authentication attempt and its error message.
         """
-        try:
-            return await super(DefaultAzureCredential, self).get_token(*scopes, **kwargs)
-        except ClientAuthenticationError as e:
-            raise ClientAuthenticationError(
-                message="""
-{}\n\nPlease visit the documentation at
-https://aka.ms/python-sdk-identity#defaultazurecredential
-to learn what options DefaultAzureCredential supports""".format(
-                    e.message
-                )
-            )
+        if self._successful_credential:
+            return await self._successful_credential.get_token(*scopes, **kwargs)
+
+        return await super().get_token(*scopes, **kwargs)

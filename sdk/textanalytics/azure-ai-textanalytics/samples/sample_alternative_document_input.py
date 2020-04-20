@@ -27,12 +27,13 @@ import logging
 _LOGGER = logging.getLogger(__name__)
 
 class AlternativeDocumentInputSample(object):
-    endpoint = os.getenv("AZURE_TEXT_ANALYTICS_ENDPOINT")
-    key = os.getenv("AZURE_TEXT_ANALYTICS_KEY")
+    endpoint = os.environ["AZURE_TEXT_ANALYTICS_ENDPOINT"]
+    key = os.environ["AZURE_TEXT_ANALYTICS_KEY"]
 
     def alternative_document_input(self):
-        from azure.ai.textanalytics import TextAnalyticsClient, TextAnalyticsApiKeyCredential
-        text_analytics_client = TextAnalyticsClient(endpoint=self.endpoint, credential=TextAnalyticsApiKeyCredential(self.key))
+        from azure.core.credentials import AzureKeyCredential
+        from azure.ai.textanalytics import TextAnalyticsClient
+        text_analytics_client = TextAnalyticsClient(endpoint=self.endpoint, credential=AzureKeyCredential(self.key))
 
         documents = [
             {"id": "0", "language": "en", "text": "I had the best day of my life."},
@@ -43,7 +44,7 @@ class AlternativeDocumentInputSample(object):
              "text": "L'hôtel n'était pas très confortable. L'éclairage était trop sombre."}
         ]
 
-        result = text_analytics_client.detect_language(documents)
+        result = text_analytics_client.analyze_sentiment(documents)
 
         for idx, doc in enumerate(result):
             if not doc.is_error:
