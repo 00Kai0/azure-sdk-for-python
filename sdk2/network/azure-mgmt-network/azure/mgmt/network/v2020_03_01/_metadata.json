@@ -1,0 +1,43 @@
+{
+    "chosen_version": "2020-03-01",
+    "total_api_version_list": ["2020-03-01"],
+    "client": {
+        "name": "NetworkManagementClient",
+        "filename": "_network_management_client",
+        "description": "Network Client.",
+        "has_subscription_id": true
+    },
+    "global_parameters": {
+        "method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"TokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "azure.core.credentials.TokenCredential",
+                "required": true
+            },
+            "subscription_id": {
+                "method_signature": "subscription_id,  # type: str",
+                "description": "The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "constant": {
+        },
+        "call": "credential, subscription_id"
+    },
+    "config": {
+        "credential": true,
+        "credential_scopes": ["https://management.azure.com/.default"]
+
+    },
+    "operation_groups": {
+        "available_endpoint_services": "AvailableEndpointServicesOperations",
+        "private_endpoints": "PrivateEndpointsOperations",
+        "available_private_endpoint_types": "AvailablePrivateEndpointTypesOperations",
+        "private_dns_zone_groups": "PrivateDnsZoneGroupsOperations",
+        "private_link_services": "PrivateLinkServicesOperations"
+    },
+    "operation_mixins": {
+    }
+}
