@@ -1,0 +1,587 @@
+interactions:
+- request:
+    body: '{"location": "West US", "tags": {"key1": "value1"}, "properties": {"disableVpnEncryption":
+      false, "type": "Basic"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '115'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"virtualwan76dc116f\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f\"\
+        ,\r\n  \"etag\": \"W/\\\"bcfefb90-eeb5-44e4-8610-16fdead30063\\\"\",\r\n \
+        \ \"type\": \"Microsoft.Network/virtualWans\",\r\n  \"location\": \"westus\"\
+        ,\r\n  \"tags\": {\r\n    \"key1\": \"value1\"\r\n  },\r\n  \"properties\"\
+        : {\r\n    \"provisioningState\": \"Updating\",\r\n    \"disableVpnEncryption\"\
+        : false,\r\n    \"allowBranchToBranchTraffic\": true,\r\n    \"allowVnetToVnetTraffic\"\
+        : false,\r\n    \"office365LocalBreakoutCategory\": \"None\",\r\n    \"type\"\
+        : \"Basic\"\r\n  }\r\n}"
+    headers:
+      azure-asyncnotification:
+      - Enabled
+      azure-asyncoperation:
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/323f015c-999e-4cd5-a692-42850f89cfdb?api-version=2020-03-01
+      cache-control:
+      - no-cache
+      content-length:
+      - '638'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:42:13 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - abb72fd8-9d26-49f8-910c-2eefbfe4bc6c
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1199'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: '{"location": "West US", "tags": {"key1": "value1"}, "properties": {"disableVpnEncryption":
+      false, "type": "Basic"}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '115'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"virtualwan76dc116f\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f\"\
+        ,\r\n  \"etag\": \"W/\\\"bcfefb90-eeb5-44e4-8610-16fdead30063\\\"\",\r\n \
+        \ \"type\": \"Microsoft.Network/virtualWans\",\r\n  \"location\": \"westus\"\
+        ,\r\n  \"tags\": {\r\n    \"key1\": \"value1\"\r\n  },\r\n  \"properties\"\
+        : {\r\n    \"provisioningState\": \"Updating\",\r\n    \"disableVpnEncryption\"\
+        : false,\r\n    \"allowBranchToBranchTraffic\": true,\r\n    \"allowVnetToVnetTraffic\"\
+        : false,\r\n    \"office365LocalBreakoutCategory\": \"None\",\r\n    \"type\"\
+        : \"Basic\"\r\n  }\r\n}"
+    headers:
+      azure-asyncnotification:
+      - Enabled
+      azure-asyncoperation:
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/323f015c-999e-4cd5-a692-42850f89cfdb?api-version=2020-03-01
+      cache-control:
+      - no-cache
+      content-length:
+      - '638'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:42:24 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - abb72fd8-9d26-49f8-910c-2eefbfe4bc6c
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1198'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/323f015c-999e-4cd5-a692-42850f89cfdb?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"status\": \"Succeeded\"\r\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '29'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:42:54 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - 0bc12d1c-e7bb-425b-94af-3e8e8ba6b2ca
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"virtualwan76dc116f\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f\"\
+        ,\r\n  \"etag\": \"W/\\\"9a1567a9-0fc7-4114-bf92-81d1dc2fd033\\\"\",\r\n \
+        \ \"type\": \"Microsoft.Network/virtualWans\",\r\n  \"location\": \"westus\"\
+        ,\r\n  \"tags\": {\r\n    \"key1\": \"value1\"\r\n  },\r\n  \"properties\"\
+        : {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"disableVpnEncryption\"\
+        : false,\r\n    \"allowBranchToBranchTraffic\": true,\r\n    \"allowVnetToVnetTraffic\"\
+        : false,\r\n    \"office365LocalBreakoutCategory\": \"None\",\r\n    \"type\"\
+        : \"Basic\"\r\n  }\r\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '639'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:42:54 GMT
+      etag:
+      - W/"9a1567a9-0fc7-4114-bf92-81d1dc2fd033"
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - 34cf20a8-289d-4b2d-b1b2-16d4c7a7d33c
+    status:
+      code: 200
+      message: OK
+- request:
+    body: 'b''{"location": "West US", "tags": {"key1": "value1"}, "properties": {"virtualWan":
+      {"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f"},
+      "addressSpace": {"addressPrefixes": ["10.0.0.0/16"]}, "isSecuritySite": false,
+      "vpnSiteLinks": [{"name": "vpnSiteLink1", "properties": {"linkProperties": {"linkProviderName":
+      "vendor1", "linkSpeedInMbps": 0}, "ipAddress": "50.50.50.56", "bgpProperties":
+      {"asn": 1234, "bgpPeeringAddress": "192.168.0.0"}}}]}}'''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '577'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"vnpsite76dc116f\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f\"\
+        ,\r\n  \"etag\": \"W/\\\"84dc786c-c963-4509-ac67-1e200d746ab1\\\"\",\r\n \
+        \ \"type\": \"Microsoft.Network/vpnSites\",\r\n  \"location\": \"westus\"\
+        ,\r\n  \"tags\": {\r\n    \"key1\": \"value1\"\r\n  },\r\n  \"properties\"\
+        : {\r\n    \"provisioningState\": \"Updating\",\r\n    \"addressSpace\": {\r\
+        \n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n \
+        \   },\r\n    \"deviceProperties\": {\r\n      \"linkSpeedInMbps\": 0\r\n\
+        \    },\r\n    \"virtualWan\": {\r\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f\"\
+        \r\n    },\r\n    \"isSecuritySite\": false,\r\n    \"vpnSiteLinks\": [\r\n\
+        \      {\r\n        \"name\": \"vpnSiteLink1\",\r\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f/vpnSiteLinks/vpnSiteLink1\"\
+        ,\r\n        \"etag\": \"W/\\\"84dc786c-c963-4509-ac67-1e200d746ab1\\\"\"\
+        ,\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\"\
+        ,\r\n          \"ipAddress\": \"50.50.50.56\",\r\n          \"bgpProperties\"\
+        : {\r\n            \"asn\": 1234,\r\n            \"bgpPeeringAddress\": \"\
+        192.168.0.0\"\r\n          },\r\n          \"linkProperties\": {\r\n     \
+        \       \"linkProviderName\": \"vendor1\",\r\n            \"linkSpeedInMbps\"\
+        : 0\r\n          }\r\n        },\r\n        \"type\": \"Microsoft.Network/vpnSites/vpnSiteLinks\"\
+        \r\n      }\r\n    ]\r\n  }\r\n}"
+    headers:
+      azure-asyncnotification:
+      - Enabled
+      azure-asyncoperation:
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/8241121d-8a8b-4a82-ba82-64e3a17c2898?api-version=2020-03-01
+      cache-control:
+      - no-cache
+      content-length:
+      - '1626'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:42:58 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - 80c7e591-332c-4e73-8998-636cc7beb9ec
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1197'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: 'b''{"location": "West US", "tags": {"key1": "value1"}, "properties": {"virtualWan":
+      {"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f"},
+      "addressSpace": {"addressPrefixes": ["10.0.0.0/16"]}, "isSecuritySite": false,
+      "vpnSiteLinks": [{"name": "vpnSiteLink1", "properties": {"linkProperties": {"linkProviderName":
+      "vendor1", "linkSpeedInMbps": 0}, "ipAddress": "50.50.50.56", "bgpProperties":
+      {"asn": 1234, "bgpPeeringAddress": "192.168.0.0"}}}]}}'''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '577'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"vnpsite76dc116f\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f\"\
+        ,\r\n  \"etag\": \"W/\\\"84dc786c-c963-4509-ac67-1e200d746ab1\\\"\",\r\n \
+        \ \"type\": \"Microsoft.Network/vpnSites\",\r\n  \"location\": \"westus\"\
+        ,\r\n  \"tags\": {\r\n    \"key1\": \"value1\"\r\n  },\r\n  \"properties\"\
+        : {\r\n    \"provisioningState\": \"Updating\",\r\n    \"addressSpace\": {\r\
+        \n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\n \
+        \   },\r\n    \"deviceProperties\": {\r\n      \"linkSpeedInMbps\": 0\r\n\
+        \    },\r\n    \"virtualWan\": {\r\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f\"\
+        \r\n    },\r\n    \"isSecuritySite\": false,\r\n    \"vpnSiteLinks\": [\r\n\
+        \      {\r\n        \"name\": \"vpnSiteLink1\",\r\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f/vpnSiteLinks/vpnSiteLink1\"\
+        ,\r\n        \"etag\": \"W/\\\"84dc786c-c963-4509-ac67-1e200d746ab1\\\"\"\
+        ,\r\n        \"properties\": {\r\n          \"provisioningState\": \"Updating\"\
+        ,\r\n          \"ipAddress\": \"50.50.50.56\",\r\n          \"bgpProperties\"\
+        : {\r\n            \"asn\": 1234,\r\n            \"bgpPeeringAddress\": \"\
+        192.168.0.0\"\r\n          },\r\n          \"linkProperties\": {\r\n     \
+        \       \"linkProviderName\": \"vendor1\",\r\n            \"linkSpeedInMbps\"\
+        : 0\r\n          }\r\n        },\r\n        \"type\": \"Microsoft.Network/vpnSites/vpnSiteLinks\"\
+        \r\n      }\r\n    ]\r\n  }\r\n}"
+    headers:
+      azure-asyncnotification:
+      - Enabled
+      azure-asyncoperation:
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/8241121d-8a8b-4a82-ba82-64e3a17c2898?api-version=2020-03-01
+      cache-control:
+      - no-cache
+      content-length:
+      - '1626'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:43:12 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - 80c7e591-332c-4e73-8998-636cc7beb9ec
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1196'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/8241121d-8a8b-4a82-ba82-64e3a17c2898?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"status\": \"Succeeded\"\r\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '29'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:43:42 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - ff5df99c-7886-440f-947e-4a7ac23da523
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"vnpsite76dc116f\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f\"\
+        ,\r\n  \"etag\": \"W/\\\"d4c9c93d-e789-42fa-91dd-ff881d42f493\\\"\",\r\n \
+        \ \"type\": \"Microsoft.Network/vpnSites\",\r\n  \"location\": \"westus\"\
+        ,\r\n  \"tags\": {\r\n    \"key1\": \"value1\"\r\n  },\r\n  \"properties\"\
+        : {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"addressSpace\":\
+        \ {\r\n      \"addressPrefixes\": [\r\n        \"10.0.0.0/16\"\r\n      ]\r\
+        \n    },\r\n    \"deviceProperties\": {\r\n      \"linkSpeedInMbps\": 0\r\n\
+        \    },\r\n    \"virtualWan\": {\r\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f\"\
+        \r\n    },\r\n    \"isSecuritySite\": false,\r\n    \"vpnSiteLinks\": [\r\n\
+        \      {\r\n        \"name\": \"vpnSiteLink1\",\r\n        \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/vpnSites/vnpsite76dc116f/vpnSiteLinks/vpnSiteLink1\"\
+        ,\r\n        \"etag\": \"W/\\\"d4c9c93d-e789-42fa-91dd-ff881d42f493\\\"\"\
+        ,\r\n        \"properties\": {\r\n          \"provisioningState\": \"Succeeded\"\
+        ,\r\n          \"ipAddress\": \"50.50.50.56\",\r\n          \"bgpProperties\"\
+        : {\r\n            \"asn\": 1234,\r\n            \"bgpPeeringAddress\": \"\
+        192.168.0.0\"\r\n          },\r\n          \"linkProperties\": {\r\n     \
+        \       \"linkProviderName\": \"vendor1\",\r\n            \"linkSpeedInMbps\"\
+        : 0\r\n          }\r\n        },\r\n        \"type\": \"Microsoft.Network/vpnSites/vpnSiteLinks\"\
+        \r\n      }\r\n    ]\r\n  }\r\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '1628'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:43:42 GMT
+      etag:
+      - W/"d4c9c93d-e789-42fa-91dd-ff881d42f493"
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - a323cb1b-c5ac-4a5b-be32-cb135f56dce6
+    status:
+      code: 200
+      message: OK
+- request:
+    body: 'b''{"location": "West US", "tags": {"key1": "value1"}, "properties": {"virtualWan":
+      {"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f"},
+      "addressPrefix": "10.168.0.0/24", "sku": "Basic"}}'''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '319'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualHubs/virtualhubx76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"name\": \"virtualhubx76dc116f\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualHubs/virtualhubx76dc116f\"\
+        ,\r\n  \"etag\": \"W/\\\"987033ef-7af5-47ee-ba3c-c906dbcc186b\\\"\",\r\n \
+        \ \"type\": \"Microsoft.Network/virtualHubs\",\r\n  \"location\": \"westus\"\
+        ,\r\n  \"tags\": {\r\n    \"key1\": \"value1\"\r\n  },\r\n  \"properties\"\
+        : {\r\n    \"provisioningState\": \"Updating\",\r\n    \"virtualNetworkConnections\"\
+        : [],\r\n    \"virtualHubRouteTableV2s\": [],\r\n    \"addressPrefix\": \"\
+        10.168.0.0/24\",\r\n    \"routeTable\": {\r\n      \"routes\": []\r\n    },\r\
+        \n    \"virtualWan\": {\r\n      \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f\"\
+        \r\n    },\r\n    \"sku\": \"Basic\"\r\n  }\r\n}"
+    headers:
+      azure-asyncnotification:
+      - Enabled
+      azure-asyncoperation:
+      - https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/bf5d355d-47fb-45a8-ab75-6bc1c71af39c?api-version=2020-03-01
+      cache-control:
+      - no-cache
+      content-length:
+      - '860'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:43:46 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - 8b20f4f3-9218-4565-b24a-fadad7c99028
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1195'
+    status:
+      code: 201
+      message: Created
+- request:
+    body: 'b''{"location": "West US", "tags": {"key1": "value1"}, "properties": {"virtualWan":
+      {"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualWans/virtualwan76dc116f"},
+      "addressPrefix": "10.168.0.0/24", "sku": "Basic"}}'''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '319'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-mgmt-network/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_cli_mgmt_network_wan_hub_test_network76dc116f/providers/Microsoft.Network/virtualHubs/virtualhubx76dc116f?api-version=2020-03-01
+  response:
+    body:
+      string: "{\r\n  \"error\": {\r\n    \"code\": \"AnotherOperationInProgress\"\
+        ,\r\n    \"message\": \"Another operation on this or dependent resource is\
+        \ in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/westus/operations/bf5d355d-47fb-45a8-ab75-6bc1c71af39c?api-version=2020-03-01.\"\
+        ,\r\n    \"details\": []\r\n  }\r\n}"
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '410'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Apr 2020 05:43:57 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Microsoft-HTTPAPI/2.0
+      - Microsoft-HTTPAPI/2.0
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-ms-arm-service-request-id:
+      - 597450ac-5f82-40d5-8e95-20b98b85569e
+      x-ms-ratelimit-remaining-subscription-writes:
+      - '1194'
+    status:
+      code: 409
+      message: Conflict
+version: 1

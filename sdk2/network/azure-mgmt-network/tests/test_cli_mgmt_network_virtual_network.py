@@ -1,5 +1,3 @@
-
-
 # coding: utf-8
 
 #-------------------------------------------------------------------------
@@ -20,18 +18,19 @@
 
 # covered ops:
 #   virtual_networks: 8/8
-#   virtual_network_taps: 0/6  (TODO: is not registered for feature Microsoft.Network/AllowVirtualNetworkTap required to carry out the requested operation.)
-#   virtual_network_peerings: 0/4
-#   virtual_network_gateways: 0/22
-#   virtual_network_gateway_connections: 0/10
-#   local_network_gateways: 0/5
-#   subnets: 0/6
-#   service_association_links: 0/1
-#   resource_navigation_links: 0/1
+#   virtual_network_taps: 0/6  TODO: SubscriptionNotRegisteredForFeature.
+#   virtual_network_peerings: 4/4
+#   virtual_network_gateways: 12/22  TODO: others need vpnclient
+#   virtual_network_gateway_connections: 10/10
+#   local_network_gateways: 5/5
+#   subnets: 4/6  TODO: SubscriptionNotRegisteredForFeature in Prepare/Unprepare Network Policies
+#   service_association_links: 1/1
+#   resource_navigation_links: 1/1
+#   virtual_routers: 0/5  #TODO:PutVirtualRouter feature not enabled
 
 import unittest
 
-import azure.mgmt.network
+import azure.mgmt.network.v2020_03_01
 from devtools_testutils import AzureMgmtTestCase, ResourceGroupPreparer
 
 AZURE_LOCATION = 'eastus'
@@ -41,7 +40,7 @@ class MgmtNetworkTest(AzureMgmtTestCase):
     def setUp(self):
         super(MgmtNetworkTest, self).setUp()
         self.mgmt_client = self.create_mgmt_client(
-            azure.mgmt.network.NetworkManagementClient
+            azure.mgmt.network.v2020_03_01.NetworkManagementClient
         )
 
     def create_network_interface(self, group_name, location, nic_name, subnet_id, ipconfig):
@@ -97,171 +96,9 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         CONNECTION_NAME = "connectionname"
         SUBNET_NAME = "subnetname"
         GATEWAY_SUBNET_NAME = "GatewaySubnet"
+        VIRTUAL_ROUTER_NAME = "virtualroute"
 
         self.create_public_ip_addresses(resource_group.name, AZURE_LOCATION, PUBLIC_IP_ADDRESS_NAME)
-
-        """
-        # Create virtual network with delegated subnets[put]
-        BODY = {
-          "properties": {
-            "address_space": {
-              "address_prefixes": [
-                "10.0.0.0/16"
-              ]
-            },
-            "subnets": [
-              {
-                "name": "test-1",
-                "properties": {
-                  "address_prefix": "10.0.0.0/24",
-                  "delegations": [
-                    {
-                      "name": "myDelegation",
-                      "properties": {
-                        "service_name": "Microsoft.Sql/managedInstances"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "location": "westcentralus"
-        }
-        result = self.mgmt_client.virtual_networks.create_or_update(resource_group.name, VIRTUAL_NETWORK_NAME, BODY)
-        result = result.result()
-
-        # Create virtual network with subnet[put]
-        BODY = {
-          "properties": {
-            "address_space": {
-              "address_prefixes": [
-                "10.0.0.0/16"
-              ]
-            },
-            "subnets": [
-              {
-                "name": "test-1",
-                "properties": {
-                  "address_prefix": "10.0.0.0/24"
-                }
-              }
-            ]
-          },
-          "location": "eastus"
-        }
-        result = self.mgmt_client.virtual_networks.create_or_update(resource_group.name, VIRTUAL_NETWORK_NAME, BODY)
-        result = result.result()
-
-        # Create virtual network with subnet containing address prefixes[put]
-        BODY = {
-          "properties": {
-            "address_space": {
-              "address_prefixes": [
-                "10.0.0.0/16"
-              ]
-            },
-            "subnets": [
-              {
-                "name": "test-2",
-                "properties": {
-                  "address_prefixes": [
-                    "10.0.0.0/28",
-                    "10.0.1.0/28"
-                  ]
-                }
-              }
-            ]
-          },
-          "location": "eastus"
-        }
-        result = self.mgmt_client.virtual_networks.create_or_update(resource_group.name, VIRTUAL_NETWORK_NAME, BODY)
-        result = result.result()
-
-        # Create virtual network with Bgp Communities[put]
-        BODY = {
-          "properties": {
-            "address_space": {
-              "address_prefixes": [
-                "10.0.0.0/16"
-              ]
-            },
-            "subnets": [
-              {
-                "name": "test-1",
-                "properties": {
-                  "address_prefix": "10.0.0.0/24"
-                }
-              }
-            ],
-            "bgp_communities": {
-              "virtual_network_community": "12076:60000"
-            }
-          },
-          "location": "eastus"
-        }
-        result = self.mgmt_client.virtual_networks.create_or_update(resource_group.name, VIRTUAL_NETWORK_NAME, BODY)
-        result = result.result()
-
-        # Create virtual network with service endpoints[put]
-        BODY = {
-          "properties": {
-            "address_space": {
-              "address_prefixes": [
-                "10.0.0.0/16"
-              ]
-            },
-            "subnets": [
-              {
-                "name": "test-1",
-                "properties": {
-                  "address_prefix": "10.0.0.0/16",
-                  "service_endpoints": [
-                    {
-                      "service": "Microsoft.Storage"
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "location": "eastus"
-        }
-        result = self.mgmt_client.virtual_networks.create_or_update(resource_group.name, VIRTUAL_NETWORK_NAME, BODY)
-        result = result.result()
-
-        # Create virtual network with service endpoints and service endpoint policy[put]
-        BODY = {
-          "properties": {
-            "address_space": {
-              "address_prefixes": [
-                "10.0.0.0/16"
-              ]
-            },
-            "subnets": [
-              {
-                "name": "test-1",
-                "properties": {
-                  "address_prefix": "10.0.0.0/16",
-                  "service_endpoints": [
-                    {
-                      "service": "Microsoft.Storage"
-                    }
-                  ],
-                  "service_endpoint_policies": [
-                    {
-                      "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/serviceEndpointPolicies/" + SERVICE_ENDPOINT_POLICY_NAME + ""
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "location": "eastus2euap"
-        }
-        result = self.mgmt_client.virtual_networks.create_or_update(resource_group.name, VIRTUAL_NETWORK_NAME, BODY)
-        result = result.result()
-        """
 
         # Create virtual network[put]
         BODY = {
@@ -364,6 +201,31 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         }
         result = self.mgmt_client.virtual_network_gateways.begin_create_or_update(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME, BODY)
         result = result.result()
+
+        # TODO:PutVirtualRouter feature not enabled
+        # Create VirtualRouter[put]
+        # BODY = {
+        #   "tags": {
+        #     "key1": "value1"
+        #   },
+        #   "location": "West US",
+        #   "hosted_gateway": {
+        #     "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/virtualNetworkGateways/" + VIRTUAL_NETWORK_GATEWAY_NAME + ""
+        #   }
+        # }
+        # result = self.mgmt_client.virtual_routers.begin_create_or_update(resource_group.name, VIRTUAL_ROUTER_NAME, BODY)
+        # result = result.result()
+
+        # # Create Virtual Router Peering[put]
+        # BODY = {
+        #   "properties": {
+        #     "peer_ip": "192.168.1.5",
+        #     "peer_asn": "20000"
+        #   }
+        # }
+        # result = self.mgmt_client.virtual_router_peerings.create_or_update(resource_group.name, VIRTUAL_ROUTER_NAME, PEERING_NAME, BODY)
+        # result = result.result()
+
 
         """
         # Create subnet with a delegation[put]
@@ -469,6 +331,12 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         result = self.mgmt_client.virtual_network_gateway_connections.begin_set_shared_key(resource_group.name, CONNECTION_NAME, BODY)
         result = result.result()
 
+        # Get VirtualRouter[get]
+        # result = self.mgmt_client.virtual_routers.get(resource_group.name, VIRTUAL_ROUTER_NAME)
+
+        # # Get Virtual Router Peering[get]
+        # result = self.mgmt_client.virtual_router_peerings.get(resource_group.name, VIRTUAL_ROUTER_NAME, PEERING_NAME)
+
         # Get peering[get]
         result = self.mgmt_client.virtual_network_peerings.get(resource_group.name, VIRTUAL_NETWORK_NAME, VIRTUAL_NETWORK_PEERING_NAME)
 
@@ -495,6 +363,12 @@ class MgmtNetworkTest(AzureMgmtTestCase):
 
         # List peerings[get]
         result = self.mgmt_client.virtual_network_peerings.list(resource_group.name, VIRTUAL_NETWORK_NAME)
+
+        # List all Virtual Router for a given resource group[get]
+        # result = self.mgmt_client.virtual_routers.list_by_resource_group(resource_group.name)
+
+        # # List all Virtual Router Peerings for a given Virtual Router[get]
+        # result = self.mgmt_client.virtual_router_peerings.list(resource_group.name, VIRTUAL_ROUTER_NAME)
 
         # GetVirtualNetworkGateway[get]
         result = self.mgmt_client.virtual_network_gateways.get(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME)
@@ -552,6 +426,9 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         # List all virtual networks[get]
         result = self.mgmt_client.virtual_networks.list_all()
 
+        # List all Virtual Routers for a given subscription[get]
+        # result = self.mgmt_client.virtual_routers.list()
+
         # TODO: NEED VPN CLIENT
         # Disconnect VpnConnections from Virtual Network Gateway[post]
         # BODY = {
@@ -563,20 +440,20 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         # result = self.mgmt_client.virtual_network_gateways.begin_disconnect_virtual_network_gateway_vpn_connections(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME, BODY["vpn_connection_ids"])
         # result = result.result()
 
-        # TODO: UnauthorizedOperation
-        # Unprepare Network Policies[post]
-        # BODY = {
-        #   "service_name": "Microsoft.Sql/managedInstances"
-        # }
-        # result = self.mgmt_client.subnets.begin_unprepare_network_policies(resource_group.name, VIRTUAL_NETWORK_NAME, SUBNET_NAME, BODY["service_name"])
-        # result = result.result()
-
-        # TODO: UnauthorizedOperation
+        # TODO: SubscriptionNotRegisteredForFeature
         # Prepare Network Policies[post]
         # BODY = {
         #   "service_name": "Microsoft.Sql/managedInstances"
         # }
         # result = self.mgmt_client.subnets.begin_prepare_network_policies(resource_group.name, VIRTUAL_NETWORK_NAME, SUBNET_NAME, BODY["service_name"])
+        # result = result.result()
+
+        # TODO: SubscriptionNotRegisteredForFeature
+        # Unprepare Network Policies[post]
+        # BODY = {
+        #   "service_name": "Microsoft.Sql/managedInstances"
+        # }
+        # result = self.mgmt_client.subnets.begin_unprepare_network_policies(resource_group.name, VIRTUAL_NETWORK_NAME, SUBNET_NAME, BODY["service_name"])
         # result = result.result()
 
         """ TODO: NEED VPN CLIENT
@@ -620,7 +497,8 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         """
 
         # GetVirtualNetworkGatewayAdvertisedRoutes[post]
-        PEER = "test"
+        # PEER = "test"
+        PEER = "10.0.0.2"
         result = self.mgmt_client.virtual_network_gateways.begin_get_advertised_routes(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME, PEER)
         result = result.result()
 
@@ -637,16 +515,17 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         # result = self.mgmt_client.virtual_network_gateways.begin_start_packet_capture(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME, BODY["filter_data"])
         # result = result.result()
 
+        # TODO: need fix sas_url later
         # Start packet capture on virtual network gateway without filter[post]
-        result = self.mgmt_client.virtual_network_gateways.begin_start_packet_capture(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME)
-        result = result.result()
+        # result = self.mgmt_client.virtual_network_gateways.begin_start_packet_capture(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME)
+        # result = result.result()
 
         # Stop packet capture on virtual network gateway[post]
         # BODY = {
         #   "sas_url": "https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"
         # }
-        result = self.mgmt_client.virtual_network_gateways.begin_stop_packet_capture(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME)
-        result = result.result()
+        # result = self.mgmt_client.virtual_network_gateways.begin_stop_packet_capture(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME)
+        # result = result.result()
 
         # GetVirtualNetworkGatewayBGPPeerStatus[post]
         result = self.mgmt_client.virtual_network_gateways.begin_get_bgp_peer_status(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME)
@@ -660,7 +539,7 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         BODY = {
           "key_length": "128"
         }
-        result = self.mgmt_client.virtual_network_gateway_connections.begin_reset_shared_key(resource_group.name, CONNECTION_NAME, SHAREDKEY_NAME, BODY["key_length"])
+        result = self.mgmt_client.virtual_network_gateway_connections.begin_reset_shared_key(resource_group.name, CONNECTION_NAME, BODY)
         result = result.result()
 
         # ResetVirtualNetworkGateway[post]
@@ -749,6 +628,14 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         # Delete subnet[delete]
         result = self.mgmt_client.subnets.begin_delete(resource_group.name, VIRTUAL_NETWORK_NAME, SUBNET_NAME)
         result = result.result()
+
+        # # Delete VirtualRouterPeering[delete]
+        # result = self.mgmt_client.virtual_router_peerings.delete(resource_group.name, VIRTUAL_ROUTER_NAME, PEERING_NAME)
+        # result = result.result()
+
+        # Delete VirtualRouter[delete]
+        # result = self.mgmt_client.virtual_routers.begin_delete(resource_group.name, VIRTUAL_ROUTER_NAME)
+        # result = result.result()
 
         # DeleteVirtualNetworkGateway[delete]
         result = self.mgmt_client.virtual_network_gateways.begin_delete(resource_group.name, VIRTUAL_NETWORK_GATEWAY_NAME)

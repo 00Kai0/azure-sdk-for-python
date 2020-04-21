@@ -18,21 +18,22 @@
 
 # covered ops:
 #   express_route_circuit_authorizations: 4/4
-#   express_route_circuit_connections:
-#   express_route_circuit_peerings:
-#   express_route_circuits: 10/11
+#   express_route_circuit_connections: 4/4
+#   express_route_circuit_peerings: 4/4
+#   express_route_circuits: 11/11
 #   express_route_connections: 4/4
 #   express_route_cross_connection_peerings: 4/4
 #   express_route_cross_connections: 8/8
 #   express_route_gateways: 5/5
-#   express_route_links:
-#   express_route_ports_locations:
+#   express_route_links: 2/2
+#   express_route_ports_locations: 2/2
 #   express_route_ports: 6/6
-#   express_route_service_providers:
+#   express_route_service_providers: 1/1
+#   peer_express_route_circuit_connections: 2/2
 
 import unittest
 
-import azure.mgmt.network
+import azure.mgmt.network.v2019_12_01
 from devtools_testutils import AzureMgmtTestCase, ResourceGroupPreparer
 
 AZURE_LOCATION = 'eastus'
@@ -42,20 +43,67 @@ class MgmtNetworkTest(AzureMgmtTestCase):
     def setUp(self):
         super(MgmtNetworkTest, self).setUp()
         self.mgmt_client = self.create_mgmt_client(
-            azure.mgmt.network.NetworkManagementClient
+            azure.mgmt.network.v2019_12_01.NetworkManagementClient
         )
+
+    def create_virtual_hub(
+        self,
+        group_name,
+        virtual_wan_name,
+        virtual_hub_name
+    ):
+        result = self.mgmt_client.virtual_wans.begin_create_or_update(
+            group_name,
+            virtual_wan_name,
+            {
+              "location": "West US",
+              "tags": {
+                "key1": "value1"
+              },
+              "disable_vpn_encryption": False,
+              "type": "Basic"
+            }
+        )
+        wan = result.result()
+
+        result = self.mgmt_client.virtual_hubs.begin_create_or_update(
+            group_name,
+            virtual_hub_name,
+            {
+              "location": "West US",
+              "tags": {
+                "key1": "value1"
+              },
+              "virtual_wan": {
+                # "id": "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualWans/virtualWan1"
+                "id": wan.id
+              },
+              "address_prefix": "10.168.0.0/24",
+              "sku": "Basic"
+            }
+        )
+        return result.result()
     
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_network(self, resource_group):
 
         SERVICE_NAME = "myapimrndxyz"
+        SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
+        RESOURCE_GROUP = resource_group.name
         PEERING_NAME = "peeringname"
         ROUTE_TABLE_NAME = "routetable"
         ARP_TABLE_NAME = "arptable"
+        VIRTUAL_WAN_NAME = "virtualwan"
+        VIRTUAL_HUB_NAME = "virtualhub"
         EXPRESS_ROUTE_PORT_NAME = "expressrouteport"
         EXPRESS_ROUTE_CIRCUIT_NAME = "expressroutecircuit"
         ROUTE_TABLES_SUMMARY_NAME = "routetablessummary"
         EXPRESS_ROUTE_CROSS_CONNECTION_NAME = "expressroutecrossconnectionname"
+        EXPRESS_ROUTE_GATEWAY_NAME = "expressroutegateway"
+        AUTHORIZATION_NAME = "authorizationname"
+        EXPRESS_ROUTE_CONNECTION_NAME = "expressrouteconnection"
+
+        vhub = self.create_virtual_hub(RESOURCE_GROUP, VIRTUAL_WAN_NAME, VIRTUAL_HUB_NAME)
 
         # ExpressRoutePortCreate[put]
         BODY = {
@@ -67,28 +115,6 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         result = self.mgmt_client.express_route_ports.begin_create_or_update(resource_group.name, EXPRESS_ROUTE_PORT_NAME, BODY)
         result = result.result()
 
-        """
-        # ExpressRoutePortUpdateLink[put]
-        BODY = {
-          "location": "westus",
-          "properties": {
-            "peering_location": "peeringLocationName",
-            "bandwidth_in_gbps": "100",
-            "encapsulation": "QinQ",
-            "links": [
-              {
-                "name": "link1",
-                "properties": {
-                  "admin_state": "Enabled"
-                }
-              }
-            ]
-          }
-        }
-        result = self.mgmt_client.express_route_ports.create_or_update(resource_group.name, EXPRESS_ROUTE_PORT_NAME, BODY)
-        result = result.result()
-        """
-
         # Create ExpressRouteCircuit[put]
         BODY = {
           "sku": {
@@ -96,15 +122,13 @@ class MgmtNetworkTest(AzureMgmtTestCase):
             "tier": "Standard",
             "family": "MeteredData"
           },
-          "properties": {
-            "authorizations": [],
-            "peerings": [],
-            "allow_classic_operations": False,
-            "service_provider_properties": {
-              "service_provider_name": "Equinix",
-              "peering_location": "Silicon Valley",
-              "bandwidth_in_mbps": "200"
-            }
+          "authorizations": [],
+          "peerings": [],
+          "allow_classic_operations": False,
+          "service_provider_properties": {
+            "service_provider_name": "Equinix",
+            "peering_location": "Silicon Valley",
+            "bandwidth_in_mbps": "200"
           },
           "location": "Brazil South"
         }
@@ -115,7 +139,8 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         BODY = {
           "location": "westus",
           "virtual_hub": {
-            "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/virtualHubs/" + VIRTUAL_HUB_NAME + ""
+            # "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/virtualHubs/" + VIRTUAL_HUB_NAME + ""
+            "id": vhub.id
           },
           "auto_scale_configuration": {
             "bounds": {
@@ -195,22 +220,23 @@ class MgmtNetworkTest(AzureMgmtTestCase):
 
         # ExpressRouteCircuitConnectionCreate[put]
         BODY = {
-          "properties": {
-            "express_route_circuit_peering": {
-              "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/expressRouteCircuits/" + EXPRESS_ROUTE_CIRCUIT_NAME + "/peerings/" + PEERING_NAME + ""
-            },
-            "peer_express_route_circuit_peering": {
-              "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/expressRouteCircuits/" + EXPRESS_ROUTE_CIRCUIT_NAME + "/peerings/" + PEERING_NAME + ""
-            },
-            "authorization_key": "946a1918-b7a2-4917-b43c-8c4cdaee006a",
-            "address_prefix": "10.0.0.0/29"
-          }
+          "express_route_circuit_peering": {
+            "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/expressRouteCircuits/" + EXPRESS_ROUTE_CIRCUIT_NAME + "/peerings/" + PEERING_NAME + ""
+          },
+          "peer_express_route_circuit_peering": {
+            "id": "/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.Network/expressRouteCircuits/" + EXPRESS_ROUTE_CIRCUIT_NAME + "/peerings/" + PEERING_NAME + ""
+          },
+          "authorization_key": "946a1918-b7a2-4917-b43c-8c4cdaee006a",
+          "address_prefix": "10.0.0.0/29"
         }
         result = self.mgmt_client.express_route_circuit_connections.create_or_update(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME, CONNECTION_NAME, BODY)
         result = result.result()
 
+        # List Peer ExpressRouteCircuit Connection[get]
+        result = self.mgmt_client.peer_express_route_circuit_connections.list(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME)
+
         # PeerExpressRouteCircuitConnectionGet[get]
-        result = self.mgmt_client.peer_express_route_circuit_connections.get(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME, PEER_CONNECTION_NAME)
+        # result = self.mgmt_client.peer_express_route_circuit_connections.get(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME, PEER_CONNECTION_NAME)
 
         # ExpressRouteCircuitConnectionGet[get]
         result = self.mgmt_client.express_route_circuit_connections.get(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME, CONNECTION_NAME)
@@ -220,9 +246,6 @@ class MgmtNetworkTest(AzureMgmtTestCase):
 
         # GetExpressRouteCrossConnectionBgpPeering[get]
         result = self.mgmt_client.express_route_cross_connection_peerings.get(resource_group.name, EXPRESS_ROUTE_CROSS_CONNECTION_NAME, PEERING_NAME)
-
-        # List Peer ExpressRouteCircuit Connection[get]
-        result = self.mgmt_client.peer_express_route_circuit_connections.list(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME)
 
         # Get ExpressRouteCircuit Authorization[get]
         result = self.mgmt_client.express_route_circuit_authorizations.get(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, AUTHORIZATION_NAME)
@@ -353,7 +376,7 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         }
         result = self.mgmt_client.express_route_ports.update_tags(resource_group.name, EXPRESS_ROUTE_PORT_NAME, BODY)
 
-        # Delete ExpressRouteCircuit[delete]
+        # Delete ExpressRouteCircuitConnection[delete]
         result = self.mgmt_client.express_route_circuit_connections.delete(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME, CONNECTION_NAME)
         result = result.result()
 
@@ -377,9 +400,12 @@ class MgmtNetworkTest(AzureMgmtTestCase):
         result = self.mgmt_client.express_route_gateways.begin_delete(resource_group.name, EXPRESS_ROUTE_GATEWAY_NAME)
         result = result.result()
 
-        # Delete ExpressRouteCircuit[delete]
-        result = self.mgmt_client.express_route_circuit_connections.delete(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME, CONNECTION_NAME)
-        result = result.result()
+        # Delete ExpressRouteCircuit[delete] TODO: swagger need change
+        # result = self.mgmt_client.express_route_circuit_connections.delete(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME, PEERING_NAME, CONNECTION_NAME)
+        # result = result.result()
+
+        # DeleteExpressRouteCircuits[delete] TODO: need example
+        result = self.mgmt_client.express_route_circuits.begin_delete(resource_group.name, EXPRESS_ROUTE_CIRCUIT_NAME)
 
         # ExpressRoutePortDelete[delete]
         result = self.mgmt_client.express_route_ports.begin_delete(resource_group.name, EXPRESS_ROUTE_PORT_NAME)
