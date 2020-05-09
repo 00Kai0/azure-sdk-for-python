@@ -17,6 +17,7 @@ def main():
     STORAGE_ACCOUNT_NAME = "storageaccountxyztest"
     NAMESPACE_NAME = "namespacex"
     EVENTHUB_NAME = "eventhubx"
+    CONSUMERGROUP_NAME = "consumergroup"
 
     # Create client
     resource_client = ResourceManagementClient(
@@ -53,7 +54,6 @@ def main():
         }
     ).result()
 
-
     # Create Namespace
     eventhub_client.namespaces.begin_create_or_update(
         GROUP_NAME,
@@ -72,7 +72,7 @@ def main():
     ).result()
 
     # Create EventHub
-    eventhub = eventhub_client.event_hubs.create_or_update(
+    eventhub_client.event_hubs.create_or_update(
         GROUP_NAME,
         NAMESPACE_NAME,
         EVENTHUB_NAME,
@@ -94,15 +94,36 @@ def main():
           }
         }
     )
-    print("Create EventHub: {}".format(eventhub))
 
-    # Get EventHub
-    eventhub = eventhub_client.event_hubs.get(
+    # Create Consumer Group
+    consumer_group = eventhub_client.consumer_groups.create_or_update(
         GROUP_NAME,
         NAMESPACE_NAME,
-        EVENTHUB_NAME
+        EVENTHUB_NAME,
+        CONSUMERGROUP_NAME,
+        {
+          "user_metadata": "New consumergroup"
+        }
     )
-    print("Get EventHub: {}".format(eventhub))
+    print("Create consumer group:\n{}".format(consumer_group))
+
+    # Get Consumer Group
+    consumer_group = eventhub_client.consumer_groups.get(
+        GROUP_NAME,
+        NAMESPACE_NAME,
+        EVENTHUB_NAME,
+        CONSUMERGROUP_NAME
+    )
+    print("Get consumer group:\n{}".format(consumer_group))
+
+    # Delete Consumer Group
+    eventhub_client.consumer_groups.delete(
+        GROUP_NAME,
+        NAMESPACE_NAME,
+        EVENTHUB_NAME,
+        CONSUMERGROUP_NAME
+    )
+    print("Delete consumer group.")
 
     # Delete EventHub
     eventhub_client.event_hubs.delete(
@@ -110,7 +131,6 @@ def main():
         NAMESPACE_NAME,
         EVENTHUB_NAME
     )
-    print("Delete EventHub.")
 
     # Delete Namespace
     eventhub_client.namespaces.begin_delete(

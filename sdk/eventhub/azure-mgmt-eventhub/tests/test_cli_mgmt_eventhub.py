@@ -29,10 +29,6 @@ import unittest
 
 import azure.core
 import azure.mgmt.eventhub
-# import azure.mgmt.network
-# import azure.mgmt.network.models
-# import azure.mgmt.storage
-# import azure.mgmt.storage.models
 from devtools_testutils import AzureMgmtTestCase, ResourceGroupPreparer
 
 AZURE_LOCATION = 'eastus'
@@ -46,20 +42,22 @@ class MgmtEventHubTest(AzureMgmtTestCase):
         )
 
         if self.is_live:
+            from azure.mgmt.storage import StorageManagementClient
             self.storage_client = self.create_mgmt_client(
                 azure.mgmt.storage.StorageManagementClient
             )
+            from azure.mgmt.network import NetworkManagementClient
             self.network_client = self.create_mgmt_client(
                 azure.mgmt.network.NetworkManagementClient
             )
 
     # TODO: use track 2 later
     def create_storage_account(self, group_name, location, storage_name):
-        import azure.mgmt.storage
         import azure.mgmt.storage.models
+        from azure.mgmt.storage import models
         params_create = azure.mgmt.storage.models.StorageAccountCreateParameters(
-            sku=azure.mgmt.storage.models.Sku(name=azure.mgmt.storage.models.SkuName.standard_lrs),
-            kind=azure.mgmt.storage.models.Kind.storage,
+            sku=models.Sku(name=models.SkuName.standard_lrs),
+            kind=models.Kind.storage,
             location=location
         )
         result_create = self.storage_client.storage_accounts.create(
@@ -71,17 +69,16 @@ class MgmtEventHubTest(AzureMgmtTestCase):
 
     # TODO: use track 2 later
     def create_virtual_network(self, group_name, location, network_name, subnet_name):
-        import azure.mgmt.network
-        import azure.mgmt.network.models
-        params_create = azure.mgmt.network.models.VirtualNetwork(
+        from azure.mgmt.network import models
+        params_create = models.VirtualNetwork(
             location=location,
-            address_space=azure.mgmt.network.models.AddressSpace(
+            address_space=models.AddressSpace(
                 address_prefixes=[
                     '10.0.0.0/16',
                 ],
             ),
             subnets=[
-                azure.mgmt.network.models.Subnet(
+                models.Subnet(
                     name=subnet_name,
                     address_prefix='10.0.0.0/24',
                 ),
