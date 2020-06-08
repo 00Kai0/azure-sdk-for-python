@@ -57,7 +57,7 @@ class MgmtComputeTestMultiVersion(AzureMgmtTestCase):
             self.mgmt_client._PROFILE_TAG + " test"
         )
 
-    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    @ResourceGroupPreparer(location=AZURE_LOCATION, random_name_enabled=True)
     def test_compute_disks_multi(self, resource_group):
 
         DISK_NAME = self.get_resource_name("disknamex")
@@ -184,13 +184,13 @@ class MgmtComputeTest(AzureMgmtTestCase):
         else:
             return ('000', '000')
 
-    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    @ResourceGroupPreparer(location=AZURE_LOCATION, random_name_enabled=True)
     def test_compute_disk_encryption(self, resource_group):
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
         TENANT_ID = self.settings.TENANT_ID
         CLIENT_OID = self.settings.CLIENT_OID if self.is_live else "000"
         RESOURCE_GROUP = resource_group.name
-        KEY_VAULT_NAME = self.get_resource_name("keyvaultxmm")
+        KEY_VAULT_NAME = self.get_resource_name("keyvaultxmmx")
         DISK_ENCRYPTION_SET_NAME = self.get_resource_name("diskencryptionset")
 
         VAULT_ID, KEY_URI = self.create_key(RESOURCE_GROUP, AZURE_LOCATION, KEY_VAULT_NAME, TENANT_ID, CLIENT_OID)
@@ -244,7 +244,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
         result = self.mgmt_client.disk_encryption_sets.begin_delete(resource_group.name, DISK_ENCRYPTION_SET_NAME)
         result = result.result()
     
-    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    @ResourceGroupPreparer(location=AZURE_LOCATION, random_name_enabled=True)
     def test_compute_shot(self, resource_group):
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID
         RESOURCE_GROUP = resource_group.name
@@ -355,7 +355,7 @@ class MgmtComputeTest(AzureMgmtTestCase):
         result = self.mgmt_client.snapshots.begin_delete(resource_group.name, SNAPSHOT_NAME)
         result = result.result()
 
-    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    @ResourceGroupPreparer(location=AZURE_LOCATION, random_name_enabled=True)
     def test_compute_disks(self, resource_group):
 
         DISK_NAME = self.get_resource_name("disknamex")

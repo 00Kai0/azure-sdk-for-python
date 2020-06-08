@@ -72,7 +72,7 @@ class MgmtComputeTest(AzureMgmtAsyncTestCase):
 
         return nic_info.id
 
-    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    @ResourceGroupPreparer(location=AZURE_LOCATION, random_name_enabled=True)
     def test_compute_vm(self, resource_group):
 
         SUBSCRIPTION_ID = self.settings.SUBSCRIPTION_ID

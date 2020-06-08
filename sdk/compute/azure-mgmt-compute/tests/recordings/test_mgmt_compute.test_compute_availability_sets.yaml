@@ -16,10 +16,10 @@ interactions:
       User-Agent:
       - azsdk-python-azure-mgmt-compute/0.1.0 Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
     method: PUT
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_compute_test_compute_availability_setse7f013f3/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
   response:
     body:
-      string: "{\r\n  \"name\": \"availabilitysetse7f013f3\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_compute_test_compute_availability_setse7f013f3/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3\"\
+      string: "{\r\n  \"name\": \"availabilitysetse7f013f3\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3\"\
         ,\r\n  \"type\": \"Microsoft.Compute/availabilitySets\",\r\n  \"location\"\
         : \"eastus\",\r\n  \"properties\": {\r\n    \"platformUpdateDomainCount\"\
         : 20,\r\n    \"platformFaultDomainCount\": 2\r\n  },\r\n  \"sku\": {\r\n \
@@ -28,11 +28,11 @@ interactions:
       cache-control:
       - no-cache
       content-length:
-      - '461'
+      - '480'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 18 May 2020 15:03:32 GMT
+      - Mon, 08 Jun 2020 04:33:34 GMT
       expires:
       - '-1'
       pragma:
@@ -49,9 +49,9 @@ interactions:
       x-content-type-options:
       - nosniff
       x-ms-ratelimit-remaining-resource:
-      - Microsoft.Compute/PutVM3Min;573,Microsoft.Compute/PutVM30Min;2877
+      - Microsoft.Compute/PutVM3Min;239,Microsoft.Compute/PutVM30Min;1199
       x-ms-ratelimit-remaining-subscription-writes:
-      - '1199'
+      - '1198'
     status:
       code: 200
       message: OK
@@ -67,10 +67,10 @@ interactions:
       User-Agent:
       - azsdk-python-azure-mgmt-compute/0.1.0 Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
     method: GET
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_compute_test_compute_availability_setse7f013f3/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
   response:
     body:
-      string: "{\r\n  \"name\": \"availabilitysetse7f013f3\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_compute_test_compute_availability_setse7f013f3/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3\"\
+      string: "{\r\n  \"name\": \"availabilitysetse7f013f3\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3\"\
         ,\r\n  \"type\": \"Microsoft.Compute/availabilitySets\",\r\n  \"location\"\
         : \"eastus\",\r\n  \"properties\": {\r\n    \"platformUpdateDomainCount\"\
         : 20,\r\n    \"platformFaultDomainCount\": 2,\r\n    \"virtualMachines\":\
@@ -79,11 +79,11 @@ interactions:
       cache-control:
       - no-cache
       content-length:
-      - '489'
+      - '508'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 18 May 2020 15:03:32 GMT
+      - Mon, 08 Jun 2020 04:33:34 GMT
       expires:
       - '-1'
       pragma:
@@ -121,10 +121,10 @@ interactions:
       User-Agent:
       - azsdk-python-azure-mgmt-compute/0.1.0 Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
     method: PATCH
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_compute_test_compute_availability_setse7f013f3/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
   response:
     body:
-      string: "{\r\n  \"name\": \"availabilitysetse7f013f3\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_compute_test_compute_availability_setse7f013f3/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3\"\
+      string: "{\r\n  \"name\": \"availabilitysetse7f013f3\",\r\n  \"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3\"\
         ,\r\n  \"type\": \"Microsoft.Compute/availabilitySets\",\r\n  \"location\"\
         : \"eastus\",\r\n  \"properties\": {\r\n    \"platformUpdateDomainCount\"\
         : 20,\r\n    \"platformFaultDomainCount\": 2\r\n  },\r\n  \"sku\": {\r\n \
@@ -133,11 +133,11 @@ interactions:
       cache-control:
       - no-cache
       content-length:
-      - '461'
+      - '480'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Mon, 18 May 2020 15:03:33 GMT
+      - Mon, 08 Jun 2020 04:33:35 GMT
       expires:
       - '-1'
       pragma:
@@ -154,9 +154,9 @@ interactions:
       x-content-type-options:
       - nosniff
       x-ms-ratelimit-remaining-resource:
-      - Microsoft.Compute/PutVM3Min;572,Microsoft.Compute/PutVM30Min;2876
+      - Microsoft.Compute/PutVM3Min;238,Microsoft.Compute/PutVM30Min;1198
       x-ms-ratelimit-remaining-subscription-writes:
-      - '1198'
+      - '1197'
     status:
       code: 200
       message: OK
@@ -174,7 +174,7 @@ interactions:
       User-Agent:
       - azsdk-python-azure-mgmt-compute/0.1.0 Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
     method: DELETE
-    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test_mgmt_compute_test_compute_availability_setse7f013f3/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/availabilitySets/availabilitysetse7f013f3?api-version=2019-12-01
   response:
     body:
       string: ''
@@ -184,7 +184,7 @@ interactions:
       content-length:
       - '0'
       date:
-      - Mon, 18 May 2020 15:03:35 GMT
+      - Mon, 08 Jun 2020 04:33:39 GMT
       expires:
       - '-1'
       pragma:
@@ -199,7 +199,7 @@ interactions:
       x-ms-ratelimit-remaining-resource:
       - Microsoft.Compute/DeleteVM3Min;239,Microsoft.Compute/DeleteVM30Min;1199
       x-ms-ratelimit-remaining-subscription-deletes:
-      - '14999'
+      - '14998'
     status:
       code: 200
       message: OK
