@@ -117,6 +117,46 @@ class MgmtStorageTest(AzureMgmtTestCase):
             return result.result().id
         else:
             return "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/" + group_name + "/providers/Microsoft.Network/privateEndpoints/" + endpoint_name
+    
+    @ResourceGroupPreparer(location=AZURE_LOCATION)
+    def test_storage_file_share_access_tier(self, resource_group):
+        STORAGE_ACCOUNT_NAME = "storageaccountxxyyzzn"  # TODO: need change a random name, if need run live test again.
+        SHARE_NAME = "filesharenamexxyyzz"
+
+        # StorageAccountCreate[put]
+        BODY = {
+          "sku": {
+            "name": "Standard_GRS"
+          },
+          "kind": "StorageV2",
+          "location": "westeurope",
+          "encryption": {
+            "services": {
+              "file": {
+                "key_type": "Account",
+                "enabled": False
+              },
+              "blob": {
+                "key_type": "Account",
+                "enabled": True
+              }
+            },
+            "key_source": "Microsoft.Storage"
+          },
+          "tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        }
+        result = self.mgmt_client.storage_accounts.begin_create(resource_group.name, STORAGE_ACCOUNT_NAME, BODY)
+        storageaccount = result.result()
+
+        # PutShares[put]
+        BODY = {
+          "access_tier": "Hot"
+        }
+        result = self.mgmt_client.file_shares.create(resource_group.name, STORAGE_ACCOUNT_NAME, SHARE_NAME, BODY)
+
 
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_storage(self, resource_group):
