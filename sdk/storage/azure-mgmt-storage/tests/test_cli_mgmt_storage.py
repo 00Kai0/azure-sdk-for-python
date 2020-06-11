@@ -120,7 +120,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
     
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_storage_file_share_access_tier(self, resource_group):
-        STORAGE_ACCOUNT_NAME = "storageaccountxxyyzzn"  # TODO: need change a random name, if need run live test again.
+        STORAGE_ACCOUNT_NAME = "storageaccountxxyyzzn"
         SHARE_NAME = "filesharenamexxyyzz"
 
         # StorageAccountCreate[put]
@@ -130,6 +130,7 @@ class MgmtStorageTest(AzureMgmtTestCase):
           },
           "kind": "StorageV2",
           "location": "westeurope",
+          "access_tier": "Hot",
           "encryption": {
             "services": {
               "file": {
@@ -152,11 +153,12 @@ class MgmtStorageTest(AzureMgmtTestCase):
         storageaccount = result.result()
 
         # PutShares[put]
-        BODY = {
-          "access_tier": "Hot"
-        }
-        result = self.mgmt_client.file_shares.create(resource_group.name, STORAGE_ACCOUNT_NAME, SHARE_NAME, BODY)
+        # [Kaihui] test accessTierChangeTime is correct
+        result = self.mgmt_client.file_shares.create(resource_group.name, STORAGE_ACCOUNT_NAME, SHARE_NAME, {})
 
+        # GetShares[get]
+        # TODO: [Kaihui] test accessTierChangeTime is incorrect, like empty string.
+        # result = self.mgmt_client.file_shares.get(resource_group.name, STORAGE_ACCOUNT_NAME, SHARE_NAME)
 
     @ResourceGroupPreparer(location=AZURE_LOCATION)
     def test_storage(self, resource_group):
