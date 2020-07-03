@@ -4,11 +4,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._kusto_management_client import KustoManagementClient
+from ._kusto_management_client_async import KustoManagementClient
 __all__ = ['KustoManagementClient']
-
-try:
-    from ._patch import patch_sdk
-    patch_sdk()
-except ImportError:
-    pass

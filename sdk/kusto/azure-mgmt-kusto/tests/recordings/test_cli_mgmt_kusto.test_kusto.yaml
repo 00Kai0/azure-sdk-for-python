@@ -1,0 +1,53 @@
+interactions:
+- request:
+    body: '{"location": "eastus", "sku": {"name": "Standard_L8s", "capacity": 2, "tier":
+      "Standard"}, "identity": {"type": "SystemAssigned"}, "properties": {"enableStreamingIngest":
+      true}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '177'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - azsdk-python-kustomanagementclient/unknown Python/3.6.9 (Linux-4.9.184-linuxkit-x86_64-with-Ubuntu-18.04-bionic)
+    method: PUT
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Kusto/clusters/myClusterft2m?api-version=2020-02-15
+  response:
+    body:
+      string: '{"error":{"code":"AuthenticationFailed","message":"Authentication failed.
+        The ''Authorization'' header is missing."}}'
+    headers:
+      cache-control:
+      - no-cache
+      connection:
+      - close
+      content-length:
+      - '115'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 03 Jul 2020 07:23:09 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      www-authenticate:
+      - Bearer authorization_uri="https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47",
+        error="invalid_token", error_description="The authentication failed because
+        of missing 'Authorization' header."
+      x-content-type-options:
+      - nosniff
+      x-ms-failure-cause:
+      - gateway
+    status:
+      code: 401
+      message: Unauthorized
+version: 1

@@ -4,13 +4,13 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._clusters_operations import ClustersOperations
-from ._cluster_principal_assignments_operations import ClusterPrincipalAssignmentsOperations
-from ._databases_operations import DatabasesOperations
-from ._database_principal_assignments_operations import DatabasePrincipalAssignmentsOperations
-from ._attached_database_configurations_operations import AttachedDatabaseConfigurationsOperations
-from ._data_connections_operations import DataConnectionsOperations
-from ._operations import Operations
+from ._clusters_operations_async import ClustersOperations
+from ._cluster_principal_assignments_operations_async import ClusterPrincipalAssignmentsOperations
+from ._databases_operations_async import DatabasesOperations
+from ._database_principal_assignments_operations_async import DatabasePrincipalAssignmentsOperations
+from ._attached_database_configurations_operations_async import AttachedDatabaseConfigurationsOperations
+from ._data_connections_operations_async import DataConnectionsOperations
+from ._operations_async import Operations
 
 __all__ = [
     'ClustersOperations',
