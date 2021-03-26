@@ -18,12 +18,10 @@ from .swaggertosdk.SwaggerToSdkCore import (
 _LOGGER = logging.getLogger(__name__)
 
 
-def generate(config_path, sdk_folder, project_pattern, readme, restapi_git_folder, autorest_bin=None, force_generation=False, config=None):
+def generate(config_path, sdk_folder, project_pattern, readme, restapi_git_folder, autorest_bin=None, force_generation=False):
 
     sdk_folder = Path(sdk_folder).expanduser()
-
-    if not config:
-        config = read_config(sdk_folder, config_path)
+    config = read_config(sdk_folder, config_path)
 
     global_conf = config["meta"]
     repotag = get_repo_tag_meta(global_conf)
@@ -84,6 +82,7 @@ def generate(config_path, sdk_folder, project_pattern, readme, restapi_git_folde
                 local_conf,
                 autorest_bin
             )
+    return config
 
 
 def generate_main():
